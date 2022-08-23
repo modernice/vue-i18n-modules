@@ -194,8 +194,8 @@ const title = translate('page.title')
 
 ## Nuxt
 
-This package provides a ready-to-use Nuxt plugin with support for "global"
-modules that are loaded for every page.
+This package provides a ready-to-use Nuxt plugin with support for "initial"
+modules that are eagerly loaded for every page.
 
 ```ts
 // ./plugins/i18n.ts
