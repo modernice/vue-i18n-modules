@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["esnext"],
+    "types": ["@types/node"]
+  },
+  "include": ["./src/**/*", "./dist/**/*"],
+  "exclude": ["**/node_modules/**"],
+  "files": ["index.d.ts", "vite.d.ts", "nuxt.d.ts", "build.config.ts"]
+}

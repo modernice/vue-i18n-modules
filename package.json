@@ -1,0 +1,58 @@
+{
+  "name": "@modernice/vue-i18n-modules",
+  "version": "0.0.1",
+  "description": "\"Message modules\" extension for vue-i18n",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.mjs",
+      "require": "./dist/vite/index.cjs"
+    },
+    "./nuxt": {
+      "types": "./dist/nuxt/index.d.ts",
+      "import": "./dist/nuxt/index.mjs",
+      "require": "./dist/nuxt/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "unbuild",
+    "watch": "BUILD_WATCH=1 chokidar \"./src/**/*.ts\" -c \"pnpm build\" --initial",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "i18n",
+    "modules",
+    "vue-i18n",
+    "vue-i18n-modules",
+    "namespaces",
+    "nuxt"
+  ],
+  "files": ["dist", "index.d.ts", "nuxt.d.ts", "vite.d.ts", "package.json"],
+  "author": "Saman Hosseini <saman@modernice.ltd>",
+  "license": "proprietary",
+  "dependencies": {
+    "@vue/reactivity": "^3.2.37",
+    "@vue/runtime-core": "^3.2.37",
+    "@vue/runtime-dom": "^3.2.37",
+    "@vue/shared": "^3.2.37",
+    "vue": "^3.2.37",
+    "vue-i18n": "^9"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6",
+    "chokidar-cli": "^3.0.0",
+    "nuxt": "3.0.0-rc.8",
+    "unbuild": "^0.8.8"
+  }
+}

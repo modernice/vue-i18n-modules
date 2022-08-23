@@ -1,0 +1,131 @@
+// @ts-ignore
+import type { Composer } from 'vue-i18n'
+import type { ModuleLoader, ModuleName, ModuleT } from './types.js'
+import { type InjectionKey, ref } from '@vue/runtime-core'
+import { computed } from '@vue/reactivity'
+import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
+
+/**
+ * {@link InjectionKey} for the extension.
+ */
+export const ExtensionKey: InjectionKey<Extension> = Symbol('i18n.modules')
+
+/**
+ * A vue-i18n extension that provides namespaced lazy message loading.
+ */
+export type Extension = ReturnType<typeof createExtension>
+
+/**
+ * Options for creating the {@link Extension | extension}.
+ */
+export interface Options {
+  /**
+   * The vue-i18n {@link Composer} instance, as returned by {@link useI18n}.
+   */
+  i18n: Composer
+
+  /**
+   * Module loader to use.
+   */
+  loader: ModuleLoader
+
+  /**
+   * Namespace to use when adding messages to the vue-i18n instance.
+   *
+   * @default '__modules'
+   */
+  namespace?: string
+}
+
+/**
+ * Creates the {@link Extension | extension} for namespaced messages.
+ */
+export function createExtension(options: Options) {
+  /**
+   * The vue-i18n {@link Composer} instance.
+   */
+  const i18n = computed(() => options.i18n)
+
+  /**
+   * Namespace of the extension under which the message modules are registered.
+   */
+  const namespace = computed(() => options.namespace || '__modules')
+
+  const loadedModules = ref(new Set<ModuleName>())
+
+  /**
+   * Loads and registers the messages of a module.
+   */
+  async function loadModule(
+    module: ModuleName,
+    opts?: {
+      /**
+       * If provided, the module is loaded for all given locales.
+       * Otherwise, the module is loaded for the currently active locale.
+       */
+      locales?: string[]
+    }
+  ) {
+    const { mergeLocaleMessage, locale: activeLocale } = options.i18n
+
+    const locales = opts?.locales || [activeLocale.value]
+
+    for (const locale of locales) {
+      const path = `${module}/${locale}.json`
+
+      try {
+        const mod = await options.loader({
+          path,
+          module,
+        })
+
+        mergeLocaleMessage(locale, {
+          [namespace.value]: { [module]: mod },
+        })
+      } catch (e) {
+        console.warn(
+          `[vue-i18n-modules] Failed to load messages from path "${path}": ${
+            (e as Error).message
+          }`
+        )
+      }
+
+      loadedModules.value.add(module)
+    }
+  }
+
+  /**
+   * Returns whether the given message module has been loaded yet.
+   */
+  function moduleLoaded(name: ModuleName) {
+    return loadedModules.value.has(name)
+  }
+
+  /**
+   * Translates a key of the given module to a localized message.
+   * vue-i18n's `t` function is used to translate the message, so you can pass
+   * the same parameters that you would pass to vue-i18n's `t` function.
+   */
+  function translate<
+    Name extends ModuleName,
+    Key extends ConcatKeys<Mod>,
+    Mod = ModuleT<Name>
+  >(
+    module: Name,
+    key: Key,
+    ...args: Partial<Tail<TranslateParams<typeof options.i18n>>>
+  ) {
+    const { t } = options.i18n
+    const _key = `${namespace.value}.${module}.${key}`
+    return t(_key, ...(args as []))
+  }
+
+  return {
+    i18n,
+    namespace,
+    loadModule,
+    moduleLoaded,
+    translate,
+    t: translate,
+  }
+}
