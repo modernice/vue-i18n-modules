@@ -43,15 +43,15 @@ import { createGlobLoader } from 'vue-i18n-modules/vite'
 
 // First create the vue-i18n instance.
 const i18n = createI18n({
-	// Legacy mode is not supported!
-	legacy: false,
+  // Legacy mode is not supported!
+  legacy: false,
 })
 
 // Setup a loader for message files in the `./messages` directory.
 const loader = createGlobLoader(import.meta.glob('./messages/**/*.json'), {
-	// The prefix allows you to reference/load message modules without
-	// having to specify the full path to the directory.
-	prefix: './messages/'
+  // The prefix allows you to reference/load message modules without
+  // having to specify the full path to the directory.
+  prefix: './messages/'
 })
 
 // Create the extension from the vue-i18n instance and module loader.
@@ -61,9 +61,9 @@ const extension = createExtension({ i18n, loader })
 const plugin = createPlugin()
 
 createApp()
-	.use(i18n)
-	.use(plugin)
-	.mount('#app')
+  .use(i18n)
+  .use(plugin)
+  .mount('#app')
 ```
 
 ## Basic usage
@@ -72,22 +72,22 @@ Given that your message modules are in the `./messages` directory, you must
 create a directory structure like this:
 
 - `./messages`
-	- `./foo`
-		- `./en.json`
-		- `./de.json`
-		- `./fr.json`
-		- `./foobar`
-			- `./en.json`
-			- `./de.json`
-			- `./fr.json`
-	- `./bar`
-		- `./en.json`
-		- `./de.json`
-		- `./fr.json`
-		- `./barbaz`
-			- `./en.json`
-			- `./de.json`
-			- `./fr.json`
+  - `./foo`
+    - `./en.json`
+    - `./de.json`
+    - `./fr.json`
+    - `./foobar`
+      - `./en.json`
+      - `./de.json`
+      - `./fr.json`
+  - `./bar`
+    - `./en.json`
+    - `./de.json`
+    - `./fr.json`
+    - `./barbaz`
+      - `./en.json`
+      - `./de.json`
+      - `./fr.json`
 
 The above directory structure defines 4 modules: "foo", "bar", "foo.foobar", and
 "bar.barbaz". Each module provides its messages for the locales that are configured
@@ -97,9 +97,9 @@ Given that `./messages/foo/foobar/en.json` has the following contents:
 
 ```json
 {
-	"page": {
-		"title": "Hello, Foo!"
-	}
+  "page": {
+    "title": "Hello, Foo!"
+  }
 }
 ```
 
@@ -183,9 +183,9 @@ function for a specific module:
 import { useMessages } from 'vue-i18n-modules'
 
 const { translate } = useMessages('foo.foobar', {
-	// Immediately load the module within `onServerPrefetch`
-	// and/or `onMounted`.
-	load: true,
+  // Immediately load the module within `onServerPrefetch`
+  // and/or `onMounted`.
+  load: true,
 })
 
 // Now you can omit the module name
@@ -200,37 +200,37 @@ modules that are loaded for every page.
 ```ts
 // ./plugins/i18n.ts
 import {
-	createExtension,
-	createGlobLoader,
+  createExtension,
+  createGlobLoader,
 } from '@modernice/vue-i18n-modules/nuxt'
 import { createI18n } from 'vue-i18n'
 
 export default defineNuxtPlugin((app) => {
-	const { vueApp } = app
+  const { vueApp } = app
 
-	// Create the vue-i18n plugin.
-	const i18n = createI18n({
-		locale: "en",
-		fallbackLocale: "en",
-		availableLocales: ["en", "de", "fr"],
-		legacy: false,
-	})
+  // Create the vue-i18n plugin.
+  const i18n = createI18n({
+    locale: "en",
+    fallbackLocale: "en",
+    availableLocales: ["en", "de", "fr"],
+    legacy: false,
+  })
 
-	// Install the vue-i18n plugin.
-	vueApp.use(i18n)
+  // Install the vue-i18n plugin.
+  vueApp.use(i18n)
 
-	// Create the message loader for the './i18n/messages' directory.
-	const loader = createGlobLoader(
-		import.meta.glob('./i18n/messages/**/*.json')
-	)
+  // Create the message loader for the './i18n/messages' directory.
+  const loader = createGlobLoader(
+    import.meta.glob('./i18n/messages/**/*.json')
+  )
 
-	// Create and install the vue-i18n-modules plugin.
-	createExtension({
-		loader,
-		i18n: i18n.global,
+  // Create and install the vue-i18n-modules plugin.
+  createExtension({
+    loader,
+    i18n: i18n.global,
 
-		// Modules that are eagerly loaded for every page.
-		initial: ['foo', 'bar', 'foo.foobar'],
+    // Modules that are eagerly loaded for every page.
+    initial: ['foo', 'bar', 'foo.foobar'],
   })(app)
 })
 ```
