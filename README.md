@@ -235,6 +235,22 @@ export default defineNuxtPlugin((app) => {
 })
 ```
 
+### Middleware
+
+A middleware for loading message modules is provided for Nuxt applications:
+
+```ts
+// Within a Vue setup function
+
+definePageMeta({
+  middleware: 'messages',
+
+  // Load the "foo" and "foo.bar" message modules in a
+  // middleware before rendering the page.
+  translate: ['foo', 'foo.bar'],
+})
+```
+
 ## License
 
 [MIT](./LICENSE)
