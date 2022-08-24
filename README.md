@@ -1,8 +1,8 @@
 # vue-i18n-modules
 
-An extension to vue-i18n that provides namespaced lazy-loading of messages, as
-opposed to the default behavior of vue-i18n, which always loads all messages for
-a specific locale.
+An extension for [vue-i18n](https://github.com/intlify/vue-i18n-next) that
+provides namespaced lazy-loading of messages, as opposed to the default behavior
+of vue-i18n, which always loads all messages for a specific locale.
 
 ## Introduction
 
