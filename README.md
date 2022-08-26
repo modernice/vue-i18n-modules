@@ -58,7 +58,7 @@ const loader = createGlobLoader(import.meta.glob('./messages/**/*.json'), {
 const extension = createExtension({ i18n, loader })
 
 // Create the Vue plugin from the extension.
-const plugin = createPlugin()
+const plugin = createPlugin(extension)
 
 createApp()
   .use(i18n)
