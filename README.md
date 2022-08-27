@@ -26,11 +26,11 @@ once.
 ## Installation
 
 ```sh
-npm i vue-i18n vue-i18n-modules
+npm i vue-i18n@^9 @modernice/vue-i18n-modules
 
-pnpm i vue-i18n vue-i18n-modules
+pnpm i vue-i18n@^9 @modernice/vue-i18n-modules
 
-yarn add vue-i18n vue-i18n-modules
+yarn add vue-i18n@^9 @modernice/vue-i18n-modules
 ```
 
 ## Setup
