@@ -35,12 +35,23 @@ export interface Options {
    * @default '__modules'
    */
   namespace?: string
+
+  /**
+   * Enable debugging logs.
+   */
+  debug?: boolean
 }
 
 /**
  * Creates the {@link Extension | extension} for namespaced messages.
  */
 export function createExtension(options: Options) {
+  function debugLog(message: string) {
+    if (options.debug) {
+      console.debug(`[vue-i18n-modules] ${message}`)
+    }
+  }
+
   /**
    * The vue-i18n {@link Composer} instance.
    */
@@ -70,19 +81,27 @@ export function createExtension(options: Options) {
 
     const locales = opts?.locales || [activeLocale.value]
 
+    debugLog(`Trying to load ${module} module (${locales.join(', ')}) ...`)
+
     for (const locale of locales) {
       const path = `${module}/${locale}.json`
 
       try {
+        debugLog(`Trying to load module from "${path}" ...`)
+
         const mod = await options.loader({
           path,
           module,
         })
 
+        debugLog(`Merging messages of "${module}" module (${locale}) into vue-i18n ...`)
+
         mergeLocaleMessage(locale, {
           [namespace.value]: { [module]: mod },
         })
       } catch (e) {
+        debugLog(`Failed to load "${module}" module: ${(e as Error).message}`)
+
         console.warn(
           `[vue-i18n-modules] Failed to load messages from path "${path}": ${
             (e as Error).message
@@ -120,12 +139,13 @@ export function createExtension(options: Options) {
     return t(_key, ...(args as []))
   }
 
-  return {
+ return {
     i18n,
     namespace,
     loadModule,
     moduleLoaded,
     translate,
     t: translate,
+    debugLog,
   }
 }

@@ -35,6 +35,7 @@ export function useMessages<Name extends ModuleName>(
     loadModule,
     moduleLoaded,
     translate: _translate,
+    debugLog,
   } = useExtension()
 
   /**
@@ -57,7 +58,25 @@ export function useMessages<Name extends ModuleName>(
     }
 
     if (!moduleLoaded(module)) {
-      await loadModule(module)
+      debugLog(
+        `[useMessages] "${module}" module not loaded yet. Loading messages ...`
+      )
+
+      try {
+        await loadModule(module)
+      } catch (e) {
+        debugLog(
+          `[useMessages] Failed to load "${module}" module: ${
+            (e as Error).message
+          }`
+        )
+
+        console.warn(
+          `[vue-i18n-modules] Failed to "${module}" module: ${
+            (e as Error).message
+          }`
+        )
+      }
     }
   }
 
