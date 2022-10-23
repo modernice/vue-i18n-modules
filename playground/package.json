@@ -1,0 +1,7 @@
+{
+	"private": true,
+	"dependencies": {
+		"@modernice/vue-i18n-modules": "workspace:*",
+		"nuxt": "^3.0.0-rc.12"
+	}
+}

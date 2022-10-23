@@ -10,6 +10,6 @@ export default defineBuildConfig({
   rollup: {
     emitCJS: true,
   },
-  externals: ['nuxt', 'nuxt/app'],
+  externals: ['#app'],
   clean: process.env.BUILD_WATCH ? false : true,
 })
