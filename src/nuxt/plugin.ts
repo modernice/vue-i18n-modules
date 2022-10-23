@@ -1,4 +1,4 @@
-import { addRouteMiddleware, defineNuxtPlugin } from '#app'
+import { addRouteMiddleware, defineNuxtPlugin } from '#imports'
 import type { ModuleName } from '../types.js'
 import {
   type Extension,

@@ -10,6 +10,6 @@ export default defineBuildConfig({
   rollup: {
     emitCJS: true,
   },
-  externals: ['#app'],
+  externals: ['#app', '#imports'],
   clean: process.env.BUILD_WATCH ? false : true,
 })

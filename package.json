@@ -30,7 +30,7 @@
   },
   "scripts": {
     "postinstall": "pnpm nuxi prepare playground",
-    "dev": "pnpm nuxi dev playground",
+    "play": "pnpm nuxi dev playground",
     "build": "unbuild",
     "watch": "BUILD_WATCH=1 chokidar \"./src/**/*.ts\" -c \"pnpm build\" --initial",
     "test": "echo \"Error: no test specified\" && exit 1",
