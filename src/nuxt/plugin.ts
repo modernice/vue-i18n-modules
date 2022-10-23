@@ -1,4 +1,4 @@
-import { addRouteMiddleware, defineNuxtPlugin } from '#imports'
+import { addRouteMiddleware, defineNuxtPlugin } from '#app'
 import type { ModuleName } from '../types.js'
 import {
   type Extension,
@@ -71,13 +71,7 @@ export function createNuxtPlugin(
     addRouteMiddleware(
       InitialModulesMiddleware,
       async () => {
-        console.info('[vue-i18n-modules] Loading initial modules ...')
-
         const initial = options?.initial || []
-
-        console.info(
-          `[vue-i18n-modules] Initial modules: ${initial.join(', ')}`
-        )
 
         if (!initial.length) {
           return
