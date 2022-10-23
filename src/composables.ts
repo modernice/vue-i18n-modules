@@ -7,7 +7,7 @@ import type { ModuleName, ModuleT } from './types.js'
  * Returns the namespaced messages {@link Extension | extension}.
  */
 export function useExtension(): Extension {
-  const translator = inject(ExtensionKey)
+  const translator = inject<Extension>(ExtensionKey)
 
   if (!translator) {
     throw new Error(`[vue-i18n-modules] Extension is not installed.`)

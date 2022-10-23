@@ -8,7 +8,7 @@ import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
 /**
  * {@link InjectionKey} for the extension.
  */
-export const ExtensionKey: InjectionKey<Extension> = Symbol('i18n.modules')
+export const ExtensionKey = 'i18n.modules'
 
 /**
  * A vue-i18n extension that provides namespaced lazy message loading.
