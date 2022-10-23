@@ -18,15 +18,6 @@ export const MessagesMiddleware = 'messages'
 export const InitialModulesMiddleware = 'initial-modules'
 
 /**
- * Options for creating the {@link Extension | extension} and Nuxt plugin.
- */
-export interface Options extends BaseOptions, PluginOptions {}
-
-export function createExtension(options: Options) {
-  return createNuxtPlugin(_createExtension(options), options)
-}
-
-/**
  * Options for creating the Nuxt plugin.
  */
 export interface PluginOptions {
