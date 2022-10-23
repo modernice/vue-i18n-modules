@@ -94,7 +94,9 @@ export function createExtension(options: Options) {
           module,
         })
 
-        debugLog(`Merging messages of "${module}" module (${locale}) into vue-i18n ...`)
+        debugLog(
+          `Merging messages of "${module}" module (${locale}) into vue-i18n ...`
+        )
 
         mergeLocaleMessage(locale, {
           [namespace.value]: { [module]: mod },
@@ -139,7 +141,7 @@ export function createExtension(options: Options) {
     return t(_key, ...(args as []))
   }
 
- return {
+  return {
     i18n,
     namespace,
     loadModule,

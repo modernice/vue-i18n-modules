@@ -2,7 +2,6 @@ import { addRouteMiddleware, defineNuxtPlugin } from '#app'
 import type { ModuleName } from '../types.js'
 import {
   type Extension,
-  type Options as BaseOptions,
   createExtension as _createExtension,
 } from '../extension.js'
 import { createPlugin } from '../plugin.js'

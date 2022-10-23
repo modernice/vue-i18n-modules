@@ -3,10 +3,11 @@ import { English, languages } from '../config/i18n.js'
 import { createI18n } from 'vue-i18n'
 import {
   createGlobLoader,
-  createExtension,
+  createNuxtPlugin,
 } from '@modernice/vue-i18n-modules/nuxt'
 import type foo from '../dictionary/foo/index.js'
 import type bar from '../dictionary/bar/index.js'
+import { createExtension } from '@modernice/vue-i18n-modules'
 
 declare module '@modernice/vue-i18n-modules' {
   interface DefineModules {
@@ -33,9 +34,10 @@ export default defineNuxtPlugin((app) => {
 
   vueApp.use(i18n)
 
-  createExtension({
+  const extension = createExtension({
     i18n: i18n.global,
     loader: createLoader(),
-    initial: ['foo'],
-  })(app)
+  })
+
+  createNuxtPlugin(extension, { initial: ['foo'] })(app)
 })
