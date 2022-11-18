@@ -29,7 +29,6 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "postinstall": "pnpm nuxi prepare playground",
     "play": "pnpm nuxi dev playground",
     "build": "unbuild",
     "watch": "BUILD_WATCH=1 chokidar \"./src/**/*.ts\" -c \"pnpm build\" --initial",
