@@ -28,7 +28,7 @@ export interface PluginOptions {
 
 declare module 'nuxt/dist/pages/runtime/composables' {
   export interface PageMeta {
-    messages: string[] | string
+    messages?: string[] | string
   }
 }
 
