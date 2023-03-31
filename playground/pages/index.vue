@@ -3,6 +3,11 @@ import { useExtension, useMessages } from '@modernice/vue-i18n-modules'
 import { useI18n } from 'vue-i18n'
 import { languages } from '@/config/i18n'
 
+definePageMeta({
+  middleware: ['messages'],
+  messages: ['bar'],
+})
+
 const { loadModule } = useExtension()
 const { setLocaleMessage } = useI18n()
 

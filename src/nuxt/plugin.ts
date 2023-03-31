@@ -26,6 +26,12 @@ export interface PluginOptions {
   initial?: ModuleName[]
 }
 
+declare module 'nuxt/dist/pages/runtime/composables' {
+  export interface PageMeta {
+    messages: string[] | string
+  }
+}
+
 export function createNuxtPlugin(
   extension: Extension,
   options?: PluginOptions
@@ -38,7 +44,7 @@ export function createNuxtPlugin(
     addRouteMiddleware(MessagesMiddleware, async (to) => {
       const { loadModule } = extension
 
-      const translateOption = to.matched[0].meta.translate || []
+      const translateOption = to.matched[0].meta.messages ?? []
       const modules = Array.isArray(translateOption)
         ? translateOption
         : [translateOption]

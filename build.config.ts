@@ -1,4 +1,5 @@
 import { defineBuildConfig } from 'unbuild'
+import pkg from './package.json'
 
 export default defineBuildConfig({
   declaration: true,
@@ -10,6 +11,10 @@ export default defineBuildConfig({
   rollup: {
     emitCJS: true,
   },
-  externals: ['#app'],
+  externals: [
+    '#app',
+    ...Object.keys((pkg as any).dependencies || {}),
+    ...Object.keys((pkg as any).peerDependencies || {}),
+  ],
   clean: process.env.BUILD_WATCH ? false : true,
 })
