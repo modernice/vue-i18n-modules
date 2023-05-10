@@ -42,10 +42,12 @@ export function createGlobLoader(
       const file = (await Promise.resolve(loader())) as
         | Module
         | { default: Module }
-      return 'default' in file ? file.default : file
+      return typeof file === 'object' && 'default' in file!
+        ? file.default
+        : file
     }
 
     const file = loader as Module | { default: Module }
-    return 'default' in file ? file.default : file
+    return typeof file === 'object' && 'default' in file! ? file.default : file
   }
 }

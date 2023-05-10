@@ -1,5 +1,5 @@
-// @ts-ignore
-import type { Composer } from 'vue-i18n'
+import type { useI18n } from 'vue-i18n'
+import type {} from '@intlify/core-base'
 import type { ModuleLoader, ModuleName, ModuleT } from './types.js'
 import { type InjectionKey, ref } from '@vue/runtime-core'
 import { computed } from '@vue/reactivity'
@@ -22,7 +22,7 @@ export interface Options {
   /**
    * The vue-i18n {@link Composer} instance, as returned by {@link useI18n}.
    */
-  i18n: Composer
+  i18n: ReturnType<typeof useI18n>
 
   /**
    * Module loader to use.

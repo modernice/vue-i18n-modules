@@ -16,7 +16,7 @@ export type ModuleName = keyof DefineModules extends never
   : keyof DefineModules & string
 
 /**
- * Typing for the given named module. If
+ * Typing for the given named module.
  */
 export type ModuleT<Name extends ModuleName> = Name extends keyof DefineModules
   ? DefineModules[Name]
