@@ -137,7 +137,17 @@ export function createExtension(options: Options) {
   ) {
     const { t } = options.i18n
     const _key = `${namespace.value}.${module}.${key}`
-    return t(_key, ...(args as []))
+
+    let translated = t(_key, ...(args as []))
+
+    // In production, vue-i18n doesn't replace named parameters in the messages
+    // for some reason, so we do it manually here.
+    const named = args?.[0] ?? {}
+    for (const [name, value] of Object.entries(named)) {
+      translated = translated.replaceAll(`{${name}}`, String(value))
+    }
+
+    return translated
   }
 
   return {
