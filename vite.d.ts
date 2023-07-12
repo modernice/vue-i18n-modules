@@ -1,1 +1,1 @@
-export * from './dist/vite/index.js'
+export * from './dist/vite'

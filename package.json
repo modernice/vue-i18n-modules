@@ -2,7 +2,6 @@
   "name": "@modernice/vue-i18n-modules",
   "version": "0.0.12",
   "description": "\"Message modules\" extension for vue-i18n",
-  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -13,18 +12,15 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.mjs"
     },
     "./vite": {
       "types": "./dist/vite/index.d.ts",
-      "import": "./dist/vite/index.mjs",
-      "require": "./dist/vite/index.cjs"
+      "import": "./dist/vite/index.mjs"
     },
     "./nuxt": {
       "types": "./dist/nuxt/index.d.ts",
-      "import": "./dist/nuxt/index.mjs",
-      "require": "./dist/nuxt/index.cjs"
+      "import": "./dist/nuxt/index.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -54,30 +50,30 @@
   "author": "Saman Hosseini <saman@modernice.ltd>",
   "license": "proprietary",
   "dependencies": {
-    "@nuxt/kit": "^3.4.3",
-    "@nuxt/schema": "^3.4.3"
+    "@nuxt/kit": "^3.6.2",
+    "@nuxt/schema": "^3.6.2"
   },
   "devDependencies": {
     "@intlify/core-base": "^9.2.2",
-    "@types/node": "^18.16.7",
-    "@vue/reactivity": "^3.2.47",
-    "@vue/runtime-core": "^3.2.47",
-    "@vue/runtime-dom": "^3.2.47",
-    "@vue/shared": "^3.2.47",
+    "@types/node": "^18.16.19",
+    "@vue/reactivity": "^3.3.4",
+    "@vue/runtime-core": "^3.3.4",
+    "@vue/runtime-dom": "^3.3.4",
+    "@vue/shared": "^3.3.4",
     "chokidar-cli": "^3.0.0",
-    "nuxt": "^3.4.3",
+    "nuxt": "^3.6.2",
     "typescript": "^5.0.4",
     "unbuild": "^0.8.8",
-    "vue": "3.2.47",
-    "vue-i18n": "^9.3.0-beta.16"
+    "vue": "3.3.4",
+    "vue-i18n": "^9.3.0-beta.17"
   },
   "peerDependencies": {
     "@intlify/core-base": "^9.2.2",
-    "@vue/reactivity": "^3.2.47",
-    "@vue/runtime-core": "^3.2.47",
-    "@vue/runtime-dom": "^3.2.47",
-    "@vue/shared": "^3.2.47",
-    "vue": "^3.2.47",
-    "vue-i18n": "^9.3.0-beta.16"
+    "@vue/reactivity": "^3.3.4",
+    "@vue/runtime-core": "^3.3.4",
+    "@vue/runtime-dom": "^3.3.4",
+    "@vue/shared": "^3.3.4",
+    "vue": "^3.3.4",
+    "vue-i18n": "9.3.0-beta.17"
   }
 }

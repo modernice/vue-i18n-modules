@@ -1,4 +1,4 @@
-import type { ModuleName } from '../types.js'
+import type { ModuleName } from '../types'
 export {}
 
 declare module '#app' {

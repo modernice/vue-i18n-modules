@@ -8,9 +8,6 @@ export default defineBuildConfig({
     { input: 'src/vite/index', name: 'vite/index' },
     { input: 'src/nuxt/index', name: 'nuxt/index' },
   ],
-  rollup: {
-    emitCJS: true,
-  },
   externals: [
     '#app',
     ...Object.keys((pkg as any).dependencies || {}),

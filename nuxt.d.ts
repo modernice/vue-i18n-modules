@@ -1,1 +1,1 @@
-export * from './dist/nuxt/index.js'
+export * from './dist/nuxt'
