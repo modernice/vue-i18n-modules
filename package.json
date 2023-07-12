@@ -1,6 +1,6 @@
 {
   "name": "@modernice/vue-i18n-modules",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "\"Message modules\" extension for vue-i18n",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
