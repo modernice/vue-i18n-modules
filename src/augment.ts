@@ -16,4 +16,15 @@
  * }
  * ```
  */
-export interface DefineModules {}
+export interface DefineModules {
+  foo: {
+    bar: string
+    what: 'up'
+    baz: {
+      qux: 'qux'
+      qui: {
+        bo: 'jo'
+      }
+    }
+  }
+}
