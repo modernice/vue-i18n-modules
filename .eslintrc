@@ -1,0 +1,9 @@
+{
+  "extends": ["@antfu", "prettier"],
+  "rules": {
+    "no-console": "off",
+    "vue/attribute-hyphenation": "off",
+    "vue/v-on-event-hyphenation": "off"
+  },
+  "ignorePatterns": ["**/dist/**", "**/node_modules/**"]
+}

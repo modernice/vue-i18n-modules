@@ -1,5 +1,3 @@
-import type { Options } from './extension.js'
-
 /**
  * Define types of message modules in this interface.
  *

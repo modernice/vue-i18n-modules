@@ -54,6 +54,7 @@
     "@nuxt/schema": "^3.6.2"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.39.7",
     "@intlify/core-base": "9.3.0-beta.17",
     "@types/node": "^18.16.19",
     "@vue/reactivity": "^3.3.4",
@@ -61,7 +62,9 @@
     "@vue/runtime-dom": "^3.3.4",
     "@vue/shared": "^3.3.4",
     "chokidar-cli": "^3.0.0",
+    "eslint-config-prettier": "^8.8.0",
     "nuxt": "^3.6.2",
+    "prettier": "^3.0.0",
     "typescript": "^5.0.4",
     "unbuild": "^1.2.1",
     "vue": "3.3.4",

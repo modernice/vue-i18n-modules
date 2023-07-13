@@ -1,8 +1,8 @@
 import type { Composer } from 'vue-i18n'
-import type { ModuleLoader, ModuleName, ModuleT } from './types.js'
-import { type InjectionKey, ref } from '@vue/runtime-core'
+import { ref } from '@vue/runtime-core'
 import { computed } from '@vue/reactivity'
 import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
+import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types.js'
 
 /**
  * {@link InjectionKey} for the extension.
@@ -60,8 +60,19 @@ export function createExtension(options: Options) {
    * Namespace of the extension under which the message modules are registered.
    */
   const namespace = computed(() => options.namespace || '__modules')
-
   const loadedModules = ref(new Set<ModuleName>())
+
+  async function mergeMessages(
+    locale: string,
+    module: string,
+    messages: Dictionary,
+  ) {
+    const { mergeLocaleMessage } = options.i18n
+
+    mergeLocaleMessage(locale, {
+      [namespace.value]: { [module]: messages },
+    })
+  }
 
   /**
    * Loads and registers the messages of a module.
@@ -74,9 +85,9 @@ export function createExtension(options: Options) {
        * Otherwise, the module is loaded for the currently active locale.
        */
       locales?: string[]
-    }
+    },
   ) {
-    const { mergeLocaleMessage, locale: activeLocale } = options.i18n
+    const { locale: activeLocale } = options.i18n
 
     const locales = opts?.locales || [activeLocale.value]
 
@@ -93,24 +104,20 @@ export function createExtension(options: Options) {
           module,
         })
 
-        debugLog(
-          `Merging messages of "${module}" module (${locale}) into vue-i18n ...`
-        )
-
-        mergeLocaleMessage(locale, {
-          [namespace.value]: { [module]: mod },
-        })
+        await mergeMessages(locale, module, mod)
       } catch (e) {
         debugLog(`Failed to load "${module}" module: ${(e as Error).message}`)
 
         console.warn(
           `[vue-i18n-modules] Failed to load messages from path "${path}": ${
             (e as Error).message
-          }`
+          }`,
         )
       }
 
       loadedModules.value.add(module)
+
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     }
   }
 
@@ -128,8 +135,7 @@ export function createExtension(options: Options) {
    */
   function translate<
     Name extends ModuleName,
-    Key extends ConcatKeys<Mod>,
-    Mod = ModuleT<Name>
+    Key extends ConcatKeys<ModuleT<Name>>,
   >(
     module: Name,
     key: Key,

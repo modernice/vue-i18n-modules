@@ -18,9 +18,9 @@ export type ConcatKeys<
   T,
   Separator extends string = '.',
   Prefix extends string = '',
-  NewPrefix = `${Prefix}${keyof T & string}${Separator}`,
   PrefixedKeys = `${Prefix}${keyof T & string}`,
-  ChildKeys = T[keyof T]
+  NewPrefix = `${PrefixedKeys & string}${Separator}`,
+  ChildKeys = keyof T,
 > = ChildKeys extends Record<string, unknown>
   ? PrefixedKeys | ConcatKeys<ChildKeys, Separator, NewPrefix & string>
   : PrefixedKeys

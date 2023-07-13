@@ -1,10 +1,7 @@
-import { addRouteMiddleware, defineNuxtPlugin } from '#app'
 import type { ModuleName } from '../types.js'
-import {
-  type Extension,
-  createExtension as _createExtension,
-} from '../extension.js'
+import { type Extension } from '../extension.js'
 import { createPlugin } from '../plugin.js'
+import { addRouteMiddleware, defineNuxtPlugin } from '#app'
 
 /**
  * The name of the middleware that loads message modules.
@@ -34,7 +31,7 @@ declare module 'nuxt/dist/pages/runtime/composables' {
 
 export function createNuxtPlugin(
   extension: Extension,
-  options?: PluginOptions
+  options?: PluginOptions,
 ) {
   const plugin = createPlugin(extension)
 
@@ -59,7 +56,7 @@ export function createNuxtPlugin(
         console.error(
           `[vue-i18n-modules] Failed to load message modules: ${
             (e as Error).message
-          }`
+          }`,
         )
       }
     })
@@ -81,11 +78,11 @@ export function createNuxtPlugin(
           console.error(
             `[vue-i18n-modules] Failed to load initial message modules: ${
               (e as Error).message
-            }`
+            }`,
           )
         }
       },
-      { global: true }
+      { global: true },
     )
   })
 }
