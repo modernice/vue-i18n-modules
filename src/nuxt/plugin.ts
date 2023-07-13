@@ -42,9 +42,9 @@ export function createNuxtPlugin(
       const { loadModule } = extension
 
       const translateOption = to.matched[0].meta.messages ?? []
-      const modules = Array.isArray(translateOption)
-        ? translateOption
-        : [translateOption]
+      const modules = (
+        Array.isArray(translateOption) ? translateOption : [translateOption]
+      ) as ModuleName[]
 
       if (!modules.length) {
         return
