@@ -116,8 +116,6 @@ export function createExtension(options: Options) {
       }
 
       loadedModules.value.add(module)
-
-      await new Promise((resolve) => setTimeout(resolve, 1000))
     }
   }
 

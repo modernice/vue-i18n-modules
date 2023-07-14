@@ -1,9 +1,8 @@
-import { inject, onMounted, onServerPrefetch } from '@vue/runtime-core'
+import { inject, onServerPrefetch } from '@vue/runtime-core'
+import { onBeforeMount } from 'vue'
 import { type Extension, ExtensionKey } from './extension.js'
-import { ConcatKeys, Tail, TranslateParams } from './internal.js'
+import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
 import type { ModuleName, ModuleT } from './types.js'
-import { getCurrentInstance, getCurrentScope, onBeforeMount } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 /**
  * Returns the namespaced messages {@link Extension | extension}.
@@ -52,9 +51,6 @@ export function useMessages<Name extends ModuleName>(
   ) {
     return _translate(module, key, ...(args as []))
   }
-
-  const { messages } = useI18n()
-  const instance = getCurrentInstance()
 
   async function init() {
     if (!options?.load) {
