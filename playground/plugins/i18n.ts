@@ -4,7 +4,6 @@ import {
   createNuxtPlugin,
 } from '@modernice/vue-i18n-modules/nuxt'
 import { createExtension } from '@modernice/vue-i18n-modules'
-import type { Pinia } from 'pinia'
 import { English, languages } from '../config/i18n'
 import type foo from '../dictionary/foo/index'
 import type bar from '../dictionary/bar/index'
@@ -26,8 +25,6 @@ function createLoader() {
 export default defineNuxtPlugin((app) => {
   const { vueApp } = app
 
-  const pinia = usePinia() as Pinia
-
   const i18n = createI18n({
     locale: English,
     fallbackLocale: English,
@@ -38,7 +35,6 @@ export default defineNuxtPlugin((app) => {
   vueApp.use(i18n)
 
   const extension = createExtension({
-    pinia,
     i18n: i18n.global,
     loader: createLoader(),
     debug: true,

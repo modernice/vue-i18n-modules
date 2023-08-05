@@ -4,7 +4,7 @@
 		"@modernice/vue-i18n-modules": "workspace:*"
 	},
 	"devDependencies": {
-		"nuxt": "^3.6.2",
+		"nuxt": "^3.6.5",
 		"vue": "3.3.4"
 	},
 	"peerDependencies": {
