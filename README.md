@@ -217,49 +217,6 @@ const { translate } = useMessages('foo.foobar', {
 const title = translate('page.title')
 ```
 
-## Nuxt
-
-This package provides a ready-to-use Nuxt plugin with support for "initial"
-modules that are eagerly loaded for every page.
-
-```ts
-// ./plugins/i18n.ts
-import {
-  createExtension,
-  createGlobLoader,
-} from '@modernice/vue-i18n-modules/nuxt'
-import { createI18n } from 'vue-i18n'
-
-export default defineNuxtPlugin((app) => {
-  const { vueApp } = app
-
-  // Create the vue-i18n plugin.
-  const i18n = createI18n({
-    locale: "en",
-    fallbackLocale: "en",
-    availableLocales: ["en", "de", "fr"],
-    legacy: false,
-  })
-
-  // Install the vue-i18n plugin.
-  vueApp.use(i18n)
-
-  // Create the message loader for the './i18n/messages' directory.
-  const loader = createGlobLoader(
-    import.meta.glob('./i18n/messages/**/*.json')
-  )
-
-  // Create and install the vue-i18n-modules plugin.
-  createExtension({
-    loader,
-    i18n: i18n.global,
-
-    // Modules that are eagerly loaded for every page.
-    initial: ['foo', 'bar', 'foo.foobar'],
-  })(app)
-})
-```
-
 ### Middleware
 
 A middleware for loading message modules is provided for Nuxt applications:
