@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		"outDir": "../../dist/nuxt",
-		"types": ["nuxt/dist/pages/runtime/composables"]
-	},
-  "include": ["./*"]
-}

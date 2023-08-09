@@ -1,9 +1,8 @@
 {
-  "extends": "./playground/.nuxt/tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
@@ -13,8 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "declaration": true,
-    "types": ["@types/node"]
+    "types": ["node"]
   },
-  "include": ["./src/**/*.ts"],
+  "include": ["./packages/**/*.ts"],
   "exclude": ["**/node_modules/**"]
 }

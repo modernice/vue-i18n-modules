@@ -12,11 +12,6 @@ performance, it is desirable to only load a set of messages when they're
 actually needed, instead of loading all messages for a specific locale all at
 once.
 
-### Prerequisites
-
-- Vue >= v3.0.0
-- vue-i18n >= v9.0.0
-
 ### Limitations
 
 - Only supports vue-i18n's [Composition API](https://vue-i18n.intlify.dev/guide/advanced/composition.html); does not support legacy mode
@@ -25,21 +20,51 @@ once.
 
 ## Installation
 
+### Vue
+
 ```sh
-npm i vue-i18n@^9 @modernice/vue-i18n-modules
+npm i @modernice/vue-i18n-modules
 
-pnpm i vue-i18n@^9 @modernice/vue-i18n-modules
+pnpm i @modernice/vue-i18n-modules
 
-yarn add vue-i18n@^9 @modernice/vue-i18n-modules
+yarn add @modernice/vue-i18n-modules
+```
+
+### Nuxt
+
+```sh
+npm i @modernice/nuxt-i18n-modules
+
+pnpm i @modernice/nuxt-i18n-modules
+
+yarn add @modernice/nuxt-i18n-modules
 ```
 
 ## Setup
+
+### Nuxt
+
+Add the module to your `nuxt.config`:
+
+```ts
+// nuxt.config.ts
+export default defineNuxtModule({
+  modules: ['@modernice/nuxt-i18n-modules'],
+
+  i18nModules: {
+    dictionary: 'path/to/messages', // defaults to ./dictionary
+    initial: ['foo', 'bar'] // initial messages are loaded for every page
+  }
+})
+```
+
+### Vue
 
 ```ts
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import { createExtension, createPlugin } from 'vue-i18n-modules'
-import { createGlobLoader } from 'vue-i18n-modules/vite'
+import { createGlobLoader } from 'vue-i18n-modules/vite'
 
 // First create the vue-i18n instance.
 const i18n = createI18n({
@@ -107,9 +132,9 @@ You can lazy-load and translate the title like this:
 
 ```ts
 // Within a Vue setup function
-import { useExtension } from 'vue-i18n-modules'
+import { useExtension } from 'vue-i18n-modules'
 
-const { loadModule, translate } = useExtension()
+const { loadModule, translate } = useExtension()
 
 // Loads the messages of the "foo.foobar" module.
 await loadModule('foo.foobar')
@@ -159,9 +184,9 @@ error:
 
 ```ts
 // Within a Vue setup function
-import { useExtension } from 'vue-i18n-modules'
+import { useExtension } from 'vue-i18n-modules'
 
-const { loadModule, translate } = useExtension()
+const { loadModule, translate } = useExtension()
 
 // This will not work
 await loadModule('unknown-module-name')
@@ -175,7 +200,7 @@ const title = translate('foo.foobar', 'some.key')
 
 ## useMessages()
 
-Instead of `useExtension()`, you may call `useMessages()` to get a translate
+Instead of `useExtension()`, you can call `useMessages()` to get a translate
 function for a specific module:
 
 ```ts
@@ -243,7 +268,7 @@ A middleware for loading message modules is provided for Nuxt applications:
 // Within a Vue setup function
 
 definePageMeta({
-  middleware: 'messages',
+  middleware: 'i18n:messages',
 
   // Load the "foo" and "foo.bar" message modules in a
   // middleware before rendering the page.

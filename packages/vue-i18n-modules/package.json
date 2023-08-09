@@ -1,0 +1,75 @@
+{
+  "name": "@modernice/vue-i18n-modules",
+  "version": "0.0.21",
+  "description": "\"Message modules\" extension for vue-i18n",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.mjs",
+      "require": "./dist/vite/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vite build",
+    "watch": "BUILD_WATCH=1 chokidar \"./src/**/*.ts\" -c \"pnpm build\" --initial"
+  },
+  "keywords": [
+    "vue",
+    "i18n",
+    "modules",
+    "vue-i18n",
+    "vue-i18n-modules",
+    "namespaces",
+    "nuxt"
+  ],
+  "files": [
+    "dist",
+    "index.d.ts",
+    "nuxt.d.ts",
+    "vite.d.ts",
+    "package.json"
+  ],
+  "author": "Saman Hosseini <saman@modernice.ltd>",
+  "license": "MIT",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.8",
+    "@intlify/core-base": "9.3.0-beta.25",
+    "@types/node": "^18.17.3",
+    "@vue/reactivity": "^3.3.4",
+    "@vue/runtime-core": "^3.3.4",
+    "@vue/runtime-dom": "^3.3.4",
+    "@vue/shared": "^3.3.4",
+    "chokidar-cli": "^3.0.0",
+    "eslint-config-prettier": "^8.10.0",
+    "pkg-types": "^1.0.3",
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6",
+    "unbuild": "^1.2.1",
+    "vite": "^4.4.9",
+    "vite-plugin-dts": "^3.5.1",
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.3.0-beta.25"
+  },
+  "peerDependencies": {
+    "@vue/reactivity": "^3.3.4",
+    "@vue/runtime-core": "^3.3.4",
+    "@vue/runtime-dom": "^3.3.4",
+    "@vue/shared": "^3.3.4",
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.3.0-beta.25"
+  }
+}

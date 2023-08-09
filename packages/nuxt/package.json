@@ -1,0 +1,54 @@
+{
+  "name": "@modernice/nuxt-i18n-modules",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "\"Message modules\" extension for vue-i18n in Nuxt",
+  "license": "MIT",
+  "repository": "modernice/vue-i18n-modules",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "require": "./dist/module.cjs",
+      "import": "./dist/module.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "@modernice/vue-i18n-modules": "*",
+    "vue-i18n": "^9.3.0-beta.25"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.6.5",
+    "consola": "^3.2.3",
+    "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "@modernice/vue-i18n-modules": "workspace:*",
+    "@nuxt/devtools": "latest",
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/module-builder": "^0.4.0",
+    "@nuxt/schema": "^3.6.5",
+    "@nuxt/test-utils": "^3.6.5",
+    "@types/lodash-es": "^4.17.8",
+    "@types/node": "^18.17.3",
+    "changelogen": "^0.5.4",
+    "eslint": "^8.46.0",
+    "jiti": "^1.19.1",
+    "nuxt": "^3.6.5",
+    "vitest": "^0.34.1",
+    "vue-i18n": "^9.3.0-beta.25"
+  }
+}
