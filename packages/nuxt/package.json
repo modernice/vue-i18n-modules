@@ -31,6 +31,7 @@
   },
   "peerDependencies": {
     "@modernice/vue-i18n-modules": "*",
+    "@nuxtjs/i18n": "8.0.0-rc.2",
     "vue-i18n": "^9.3.0-beta.25"
   },
   "dependencies": {
@@ -45,6 +46,7 @@
     "@nuxt/module-builder": "^0.4.0",
     "@nuxt/schema": "^3.6.5",
     "@nuxt/test-utils": "^3.6.5",
+    "@nuxtjs/i18n": "8.0.0-rc.2",
     "@types/lodash-es": "^4.17.8",
     "@types/node": "^18.17.3",
     "changelogen": "^0.5.4",
