@@ -1,13 +1,16 @@
-import type { Composer } from 'vue-i18n'
 import { ref } from '@vue/runtime-core'
 import { computed } from '@vue/reactivity'
+import type { Composer } from 'vue-i18n'
+import type { InjectionKey } from 'vue'
 import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
 import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types.js'
 
 /**
  * {@link InjectionKey} for the extension.
  */
-export const ExtensionKey = 'i18n.modules'
+export const ExtensionKey: InjectionKey<Extension> = Symbol(
+  '@modernice/vue-i18n-modules',
+)
 
 /**
  * A vue-i18n extension that provides namespaced lazy message loading.
@@ -60,7 +63,7 @@ export function createExtension(options: Options) {
    * Namespace of the extension under which the message modules are registered.
    */
   const namespace = computed(() => options.namespace || '__modules')
-  const loadedModules = ref(new Set<ModuleName>())
+  const loadedModules = ref(new Map<string, Set<ModuleName>>())
 
   async function mergeMessages(
     locale: string,
@@ -115,15 +118,26 @@ export function createExtension(options: Options) {
         )
       }
 
-      loadedModules.value.add(module)
+      if (!loadedModules.value.has(locale)) {
+        loadedModules.value.set(locale, new Set<ModuleName>())
+      }
+
+      loadedModules.value.get(locale)?.add(module)
     }
   }
 
   /**
-   * Returns whether the given message module has been loaded yet.
+   * Returns whether the given message module has been loaded yet in the given locale.
+   * If no locale is provided, the currently active locale is checked.
    */
-  function moduleLoaded(name: ModuleName) {
-    return loadedModules.value.has(name)
+  function moduleLoaded(name: ModuleName, locale?: string) {
+    locale = locale || options.i18n.locale.value
+
+    if (!loadedModules.value.has(locale)) {
+      loadedModules.value.set(locale, new Set<ModuleName>())
+    }
+
+    return loadedModules.value.get(locale)?.has(name) ?? false
   }
 
   /**
@@ -154,11 +168,42 @@ export function createExtension(options: Options) {
     return translated
   }
 
+  /**
+   * Loads the message modules for the given locale(s) by loading all message
+   * modules that were previously loaded for the current locale (or the given
+   * source locale).
+   *
+   * This function should be called before changing the locale of vue-i18n.
+   */
+  async function localize(
+    locale: string | string[],
+    options?: {
+      /**
+       * The source locale. Only messages that were loaded for this locale will
+       * be loaded for the provided target locale(s).
+       *
+       * If not provided, the currently active locale is used.
+       */
+      from?: string
+    },
+  ) {
+    const locales = Array.isArray(locale) ? locale : [locale]
+    const from = options?.from || i18n.value.locale.value
+    const source = loadedModules.value.get(from)
+
+    await Promise.all(
+      [...(source?.values() ?? [])].map((name) =>
+        loadModule(name, { locales }),
+      ),
+    )
+  }
+
   return {
     i18n,
     namespace,
     loadModule,
     moduleLoaded,
+    localize,
     translate,
     t: translate,
     debugLog,
