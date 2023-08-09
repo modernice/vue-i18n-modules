@@ -7,6 +7,7 @@ import {
   addTypeTemplate,
   createResolver,
   defineNuxtModule,
+  installModule,
 } from '@nuxt/kit'
 import { omit } from 'lodash-es'
 
@@ -38,6 +39,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (!options.dictionary) {
       throw new Error('[nuxt-i18n-modules] No dictionary path specified.')
+    }
+
+    if (!nuxt.options.modules.includes('@nuxtjs/i18n')) {
+      await installModule('@nuxtjs/i18n')
     }
 
     const resolver = createResolver(import.meta.url)
