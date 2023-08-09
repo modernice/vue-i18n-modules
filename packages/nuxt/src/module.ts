@@ -11,6 +11,8 @@ import {
 } from '@nuxt/kit'
 import { omit } from 'lodash-es'
 
+export * from './const'
+
 export interface ModuleOptions extends Omit<Options, 'i18n' | 'loader'> {
   /**
    * Path to the dictionary.
