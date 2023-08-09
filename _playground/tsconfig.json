@@ -1,7 +1,0 @@
-{
-	"extends": "./.nuxt/tsconfig.json",
-	"compilerOptions": {
-		"rootDir": ".",
-		"types": ["@modernice/vue-i18n-modules/nuxt"]
-	}
-}
