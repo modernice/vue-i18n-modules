@@ -1,5 +1,5 @@
 import { relative } from 'node:path'
-import { type ModuleName } from '@modernice/vue-i18n-modules'
+import type { ModuleName, Options } from '@modernice/vue-i18n-modules'
 import {
   addImports,
   addPlugin,
@@ -8,8 +8,9 @@ import {
   createResolver,
   defineNuxtModule,
 } from '@nuxt/kit'
+import { omit } from 'lodash-es'
 
-export interface ModuleOptions {
+export interface ModuleOptions extends Omit<Options, 'i18n' | 'loader'> {
   /**
    * Path to the dictionary.
    */
@@ -56,14 +57,14 @@ export const loader = createGlobLoader(import.meta.glob('${dictionaryDir}/**/*.j
   prefix: '${dictionaryDir}/',
 })
 `,
-      filename: 'i18n.loader.mjs',
+      filename: 'i18n-modules.loader.mjs',
       write: true,
     })
 
     addTemplate({
       getContents: () =>
         `export default ${JSON.stringify(
-          { initial: options.initial },
+          omit(options, 'dictionary'),
           null,
           2,
         )}\n`,

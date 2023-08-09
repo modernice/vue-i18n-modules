@@ -3,7 +3,7 @@ import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
 import { createI18n } from 'vue-i18n'
 import type { ModuleOptions } from '../module'
 import { addRouteMiddleware, defineNuxtPlugin } from '#app'
-import { loader } from '#build/i18n.loader.mjs'
+import { loader } from '#build/i18n-modules.loader.mjs'
 import options from '#build/i18n-modules.options.mjs'
 
 /**
@@ -17,7 +17,7 @@ export const MessagesMiddleware = 'i18n:messages'
 export const InitialModulesMiddleware = 'i18n:initial'
 
 export default defineNuxtPlugin((app) => {
-  const opts = options as Omit<ModuleOptions, 'dictionary'>
+  const opts = options as ModuleOptions
 
   const { vueApp } = app
 
@@ -32,7 +32,7 @@ export default defineNuxtPlugin((app) => {
   const extension = createExtension({
     i18n: i18n.global,
     loader,
-    debug: true,
+    ...opts,
   })
 
   const plugin = createPlugin(extension)
