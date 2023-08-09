@@ -1,19 +1,10 @@
 import type { ModuleName } from '@modernice/vue-i18n-modules'
 import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
 import type { ModuleOptions } from '../module'
+import { InitialModulesMiddleware, MessagesMiddleware } from '../const'
 import { addRouteMiddleware, defineNuxtPlugin, useNuxtApp } from '#app'
 import { loader } from '#build/i18n-modules.loader.mjs'
 import options from '#build/i18n-modules.options.mjs'
-
-/**
- * The name of the middleware that loads message modules.
- */
-export const MessagesMiddleware = 'i18n:messages'
-
-/**
- * The name of the global middleware that loads initial message modules.
- */
-export const InitialModulesMiddleware = 'i18n:initial'
 
 export default defineNuxtPlugin({
   // Must run after @nuxtjs/i18n!
