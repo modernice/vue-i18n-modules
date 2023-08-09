@@ -16,15 +16,6 @@ export const MessagesMiddleware = 'i18n:messages'
  */
 export const InitialModulesMiddleware = 'i18n:initial'
 
-declare module 'nuxt/app' {
-  export interface PageMeta {
-    /**
-     * The message modules to load in 'i18n:messages' middleware.
-     */
-    messages?: string[] | string
-  }
-}
-
 export default defineNuxtPlugin((app) => {
   const opts = options as Omit<ModuleOptions, 'dictionary'>
 
