@@ -11,7 +11,7 @@ import {
 } from '@nuxt/kit'
 import { omit } from 'lodash-es'
 
-export * from './const'
+export * from './runtime/const'
 
 export interface ModuleOptions extends Omit<Options, 'i18n' | 'loader'> {
   /**
