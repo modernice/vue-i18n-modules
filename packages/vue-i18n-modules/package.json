@@ -25,6 +25,7 @@
   },
   "scripts": {
     "build": "vite build",
+    "prepack": "vite build",
     "watch": "BUILD_WATCH=1 chokidar \"./src/**/*.ts\" -c \"pnpm build\" --initial"
   },
   "keywords": [
