@@ -1,3 +1,3 @@
 import type foo from './en.json'
 
-export default foo
+export type Foo = typeof foo

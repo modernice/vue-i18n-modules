@@ -1,4 +1,4 @@
-import type { DefineModules } from './augment.js'
+import type { DefineModules } from './augment'
 
 /**
  * Dictionary is the default type for a message module, if no type is defined
@@ -26,9 +26,9 @@ export type ModuleT<Name extends ModuleName> = Name extends keyof DefineModules
 /**
  * Loads message modules (e.g. from the filesystem).
  */
-export type ModuleLoader = <Name extends ModuleName, Module = ModuleT<Name>>(
+export type ModuleLoader = <Name extends ModuleName>(
   ctx: ModuleLoaderContext,
-) => Promise<Module>
+) => Promise<ModuleT<Name>>
 
 /**
  * Context that is provided to {@link ModuleLoader} when loading modules.

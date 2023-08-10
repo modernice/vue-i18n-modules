@@ -10,7 +10,21 @@ export default defineConfig(async () => {
   ]
 
   return {
-    plugins: [dts()],
+    plugins: [
+      dts({
+        beforeWriteFile(filePath, content) {
+          if (filePath.endsWith('dist/extension.d.ts')) {
+            return {
+              filePath,
+              content: content.replaceAll(
+                '<Name extends string>(module: Name, key: string',
+                '<Name extends ModuleName>(module: Name, key: ConcatKeys<ModuleT<Name>>',
+              ),
+            }
+          }
+        },
+      }),
+    ],
 
     build: {
       lib: {

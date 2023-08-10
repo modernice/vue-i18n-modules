@@ -137,12 +137,9 @@ export function createExtension(options: Options) {
    * vue-i18n's `t` function is used to translate the message, so you can pass
    * the same parameters that you would pass to vue-i18n's `t` function.
    */
-  function translate<
-    Name extends ModuleName,
-    Key extends ConcatKeys<ModuleT<Name>>,
-  >(
+  function translate<Name extends ModuleName>(
     module: Name,
-    key: Key,
+    key: ConcatKeys<ModuleT<Name>>,
     ...args: Partial<Tail<TranslateParams<typeof options.i18n>>>
   ) {
     const { t } = options.i18n

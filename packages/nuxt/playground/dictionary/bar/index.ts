@@ -1,3 +1,3 @@
 import type bar from './en.json'
 
-export default bar
+export type Bar = typeof bar

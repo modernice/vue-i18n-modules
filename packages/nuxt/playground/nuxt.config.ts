@@ -6,4 +6,9 @@ export default defineNuxtConfig({
   i18nModules: {
     initial: ['foo'],
   },
+
+  typescript: {
+    strict: true,
+    shim: false,
+  },
 })

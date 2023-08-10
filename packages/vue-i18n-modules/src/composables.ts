@@ -1,6 +1,6 @@
 import { inject, onServerPrefetch } from '@vue/runtime-core'
 import { onBeforeMount } from 'vue'
-import { type Extension } from './extension'
+import type { Extension } from './extension'
 import {
   type ConcatKeys,
   ExtensionKey,
@@ -52,8 +52,8 @@ export function useMessages<Name extends ModuleName>(
    * function is used to translate the message, so you can pass the same
    * parameters that you would pass to vue-i18n's `t` function.
    */
-  function translate<Key extends ConcatKeys<ModuleT<Name>>>(
-    key: Key,
+  function translate(
+    key: ConcatKeys<ModuleT<Name>>,
     ...args: Partial<Tail<TranslateParams<typeof i18n.value>>>
   ) {
     return _translate(module, key, ...(args as []))
