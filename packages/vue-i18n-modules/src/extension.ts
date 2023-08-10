@@ -89,7 +89,7 @@ export function createExtension(options: Options) {
     debugLog(`Trying to load ${module} module (${locales.join(', ')}) ...`)
 
     for (const locale of locales) {
-      const path = `${module}/${locale}on`
+      const path = `${module}/${locale}.json`
 
       try {
         debugLog(`Trying to load module from "${path}" ...`)
