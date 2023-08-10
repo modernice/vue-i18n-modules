@@ -1,6 +1,8 @@
 import type { DefineModules } from './augment'
 import type { Dictionary } from './types'
 
+export const ExtensionKey = '@modernice/vue-i18n-modules'
+
 /**
  * Recursively extracts the keys of type `T`, prepending the parent key to the
  * current key, separated by `Separator`.

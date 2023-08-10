@@ -1,8 +1,13 @@
 import { inject, onServerPrefetch } from '@vue/runtime-core'
 import { onBeforeMount } from 'vue'
-import { type Extension, ExtensionKey } from './extension.js'
-import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
-import type { ModuleName, ModuleT } from './types.js'
+import { type Extension } from './extension'
+import {
+  type ConcatKeys,
+  ExtensionKey,
+  type Tail,
+  type TranslateParams,
+} from './internal'
+import type { ModuleName, ModuleT } from './types'
 
 /**
  * Returns the namespaced messages {@link Extension | extension}.

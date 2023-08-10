@@ -1,16 +1,8 @@
 import { ref } from '@vue/runtime-core'
 import { computed } from '@vue/reactivity'
 import type { Composer } from 'vue-i18n'
-import type { InjectionKey } from 'vue'
-import type { ConcatKeys, Tail, TranslateParams } from './internal.js'
-import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types.js'
-
-/**
- * {@link InjectionKey} for the extension.
- */
-export const ExtensionKey: InjectionKey<Extension> = Symbol(
-  '@modernice/vue-i18n-modules',
-)
+import type { ConcatKeys, Tail, TranslateParams } from './internal'
+import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types'
 
 /**
  * A vue-i18n extension that provides namespaced lazy message loading.
@@ -97,7 +89,7 @@ export function createExtension(options: Options) {
     debugLog(`Trying to load ${module} module (${locales.join(', ')}) ...`)
 
     for (const locale of locales) {
-      const path = `${module}/${locale}.json`
+      const path = `${module}/${locale}on`
 
       try {
         debugLog(`Trying to load module from "${path}" ...`)

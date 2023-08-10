@@ -1,6 +1,6 @@
-import { Plugin } from '@vue/runtime-core'
-import { type Extension, ExtensionKey } from './extension.js'
-import type { useExtension } from './composables.js'
+import type { Plugin } from '@vue/runtime-core'
+import { type Extension } from './extension'
+import { ExtensionKey } from './internal'
 
 /**
  * Creates the extension as a Vue plugin. After installing the plugin, you can use
