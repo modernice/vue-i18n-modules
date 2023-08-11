@@ -1,5 +1,6 @@
 import { inject, onServerPrefetch } from '@vue/runtime-core'
 import { onBeforeMount } from 'vue'
+import type { Composer } from 'vue-i18n'
 import type { Extension } from './extension'
 import {
   type ConcatKeys,
@@ -8,6 +9,16 @@ import {
   type TranslateParams,
 } from './internal'
 import type { ModuleName, ModuleT } from './types'
+
+/**
+ * ModuleTranslateFn is a function that takes a key and optional arguments and
+ * returns a localized message. It utilizes vue-i18n's `t` function for
+ * translation.
+ */
+export type ModuleTranslateFn = <Name extends ModuleName>(
+  key: ConcatKeys<ModuleT<Name>>,
+  ...args: Partial<Tail<TranslateParams<Composer>>>
+) => string
 
 /**
  * Returns the namespaced messages {@link Extension | extension}.
@@ -36,6 +47,13 @@ export function useMessages<Name extends ModuleName>(
      */
     load?: boolean
   },
+): UseMessagesReturn<Name> {
+  return _useMessages(module, options)
+}
+
+function _useMessages<Name extends ModuleName>(
+  module: Name,
+  options?: { load?: boolean },
 ) {
   const load = options?.load ?? true
 
@@ -52,12 +70,10 @@ export function useMessages<Name extends ModuleName>(
    * function is used to translate the message, so you can pass the same
    * parameters that you would pass to vue-i18n's `t` function.
    */
-  function translate(
+  const translate: ModuleTranslateFn = (
     key: ConcatKeys<ModuleT<Name>>,
     ...args: Partial<Tail<TranslateParams<typeof i18n.value>>>
-  ) {
-    return _translate(module, key, ...(args as []))
-  }
+  ) => _translate(module, key, ...(args as []))
 
   async function init() {
     if (!load) {
@@ -97,3 +113,16 @@ export function useMessages<Name extends ModuleName>(
     t: translate,
   }
 }
+
+/**
+ * Returns the "translate" function for a specific message module. The
+ * "translate" function translates a key of the module to a localized message
+ * using vue-i18n's `t` function. This function can be used to pass the same
+ * parameters that you would pass to vue-i18n's `t` function. If the message
+ * module is not loaded yet, it will be loaded server-side within
+ * `onServerPrefetch`, or client-side within `onBeforeMount`. \/
+ * UseMessagesReturn<Name>
+ */
+export type UseMessagesReturn<Name extends ModuleName> = ReturnType<
+  typeof _useMessages<Name>
+>

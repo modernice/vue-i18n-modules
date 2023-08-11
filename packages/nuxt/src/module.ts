@@ -13,6 +13,13 @@ import { omit } from 'lodash-es'
 
 export * from './runtime/const'
 
+/**
+ * ModuleOptions is an interface that extends the Options interface from the
+ * `@modernice/vue-i18n-modules` package. It defines additional properties for
+ * configuring the module. The `dictionary` property is a string representing
+ * the path to the dictionary. The `initial` property is an array of ModuleName
+ * representing the modules to load initially for every page.
+ */
 export interface ModuleOptions extends Omit<Options, 'i18n' | 'loader'> {
   /**
    * Path to the dictionary.

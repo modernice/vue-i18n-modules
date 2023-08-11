@@ -10,6 +10,17 @@ import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types'
 export type Extension = ReturnType<typeof createExtension>
 
 /**
+ * TranslateFn is a function that takes a module name, a key, and optional
+ * arguments, and returns a translated message as a string. It uses vue-i18n's
+ * `t` function to perform the translation.
+ */
+export type TranslateFn = <Name extends ModuleName>(
+  module: Name,
+  key: ConcatKeys<ModuleT<Name>>,
+  ...args: Partial<Tail<TranslateParams<Composer>>>
+) => string
+
+/**
  * Options for creating the {@link Extension | extension}.
  */
 export interface Options {
@@ -137,11 +148,11 @@ export function createExtension(options: Options) {
    * vue-i18n's `t` function is used to translate the message, so you can pass
    * the same parameters that you would pass to vue-i18n's `t` function.
    */
-  function translate<Name extends ModuleName>(
+  const translate: TranslateFn = <Name extends ModuleName>(
     module: Name,
     key: ConcatKeys<ModuleT<Name>>,
     ...args: Partial<Tail<TranslateParams<typeof options.i18n>>>
-  ) {
+  ) => {
     const { t } = options.i18n
     const _key = `${namespace.value}.${module}.${key}`
 
