@@ -15,7 +15,7 @@ import type { ModuleName, ModuleT } from './types'
  * returns a localized message. It utilizes vue-i18n's `t` function for
  * translation.
  */
-export type ModuleTranslateFn = <Name extends ModuleName>(
+export type ModuleTranslateFn<Name extends ModuleName> = (
   key: ConcatKeys<ModuleT<Name>>,
   ...args: Partial<Tail<TranslateParams<Composer>>>
 ) => string
@@ -70,7 +70,7 @@ function _useMessages<Name extends ModuleName>(
    * function is used to translate the message, so you can pass the same
    * parameters that you would pass to vue-i18n's `t` function.
    */
-  const translate: ModuleTranslateFn = (
+  const translate: ModuleTranslateFn<Name> = (
     key: ConcatKeys<ModuleT<Name>>,
     ...args: Partial<Tail<TranslateParams<typeof i18n.value>>>
   ) => _translate(module, key, ...(args as []))
