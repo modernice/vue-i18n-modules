@@ -61,9 +61,14 @@ function _useMessages<Name extends ModuleName>(
     i18n,
     loadModule,
     moduleLoaded,
+    moduleNamespace,
     translate: _translate,
     debugLog,
   } = useExtension()
+
+  function messageNamespace<Key extends ConcatKeys<ModuleT<Name>>>(key: Key) {
+    return moduleNamespace(module, key)
+  }
 
   /**
    * Translates a key of the module to a localized message. vue-i18n's `t`
@@ -109,6 +114,7 @@ function _useMessages<Name extends ModuleName>(
   onBeforeMount(init)
 
   return {
+    messageNamespace,
     translate,
     t: translate,
   }

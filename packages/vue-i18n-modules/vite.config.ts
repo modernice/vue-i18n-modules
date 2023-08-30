@@ -27,6 +27,16 @@ export default defineConfig(async () => {
                 ),
             }
           }
+
+          if (filePath.endsWith('dist/composables.d.ts')) {
+            return {
+              filePath,
+              content: content.replaceAll(
+                '<Key extends string>',
+                '<Key extends ConcatKeys<ModuleT<Name>>>',
+              ),
+            }
+          }
         },
       }),
     ],
