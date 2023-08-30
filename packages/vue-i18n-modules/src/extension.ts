@@ -143,6 +143,13 @@ export function createExtension(options: Options) {
     return loadedModules.value.get(locale)?.has(name) ?? false
   }
 
+  function moduleNamespace<
+    Name extends ModuleName,
+    Key extends ConcatKeys<ModuleT<Name>>,
+  >(module: Name, key: Key) {
+    return `${namespace.value}.${module}.${key}` as const
+  }
+
   /**
    * Translates a key of the given module to a localized message.
    * vue-i18n's `t` function is used to translate the message, so you can pass
@@ -154,7 +161,7 @@ export function createExtension(options: Options) {
     ...args: Partial<Tail<TranslateParams<typeof options.i18n>>>
   ) => {
     const { t } = options.i18n
-    const _key = `${namespace.value}.${module}.${key}`
+    const _key = moduleNamespace(module, key)
 
     let translated = t(_key, ...(args as []))
 
@@ -203,6 +210,7 @@ export function createExtension(options: Options) {
     namespace,
     loadModule,
     moduleLoaded,
+    moduleNamespace,
     localize,
     translate,
     t: translate,

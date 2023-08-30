@@ -16,10 +16,15 @@ export default defineConfig(async () => {
           if (filePath.endsWith('dist/extension.d.ts')) {
             return {
               filePath,
-              content: content.replaceAll(
-                '<Name extends string>(module: Name, key: string',
-                '<Name extends ModuleName>(module: Name, key: ConcatKeys<ModuleT<Name>>',
-              ),
+              content: content
+                .replaceAll(
+                  '<Name extends string>(module: Name, key: string',
+                  '<Name extends ModuleName>(module: Name, key: ConcatKeys<ModuleT<Name>>',
+                )
+                .replaceAll(
+                  '<Name extends string, Key extends string>',
+                  '<Name extends ModuleName, Key extends ConcatKeys<ModuleT<Name>>>',
+                ),
             }
           }
         },
