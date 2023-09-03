@@ -8,3 +8,5 @@ declare module '#app' {
     messages?: ModuleName[] | ModuleName
   }
 }
+
+export {}
