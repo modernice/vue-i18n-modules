@@ -1,6 +1,6 @@
 import type { ModuleName } from '@modernice/vue-i18n-modules'
 
-declare module '#app' {
+declare module 'nuxt/dist/pages/runtime/composables' {
   export interface PageMeta {
     /**
      * The message modules to load in 'i18n:messages' middleware.
