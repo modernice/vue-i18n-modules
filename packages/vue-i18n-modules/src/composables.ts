@@ -1,5 +1,5 @@
 import { inject, onServerPrefetch } from '@vue/runtime-core'
-import { onBeforeMount } from 'vue'
+import { getCurrentInstance, onBeforeMount } from 'vue'
 import type { Composer } from 'vue-i18n'
 import type { Extension } from './extension'
 import {
@@ -112,8 +112,13 @@ function _useMessages<Name extends ModuleName>(
     }
   }
 
-  onServerPrefetch(init)
-  onBeforeMount(init)
+  const instance = getCurrentInstance()
+  if (instance) {
+    instance.appContext.app.runWithContext(() => {
+      onServerPrefetch(init)
+      onBeforeMount(init)
+    })
+  }
 
   return {
     messageNamespace,
