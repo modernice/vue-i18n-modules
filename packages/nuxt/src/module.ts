@@ -11,8 +11,6 @@ import {
 } from '@nuxt/kit'
 import { omit } from 'lodash-es'
 
-export * from './runtime/const'
-
 /**
  * ModuleOptions is an interface that extends the Options interface from the
  * `@modernice/vue-i18n-modules` package. It defines additional properties for

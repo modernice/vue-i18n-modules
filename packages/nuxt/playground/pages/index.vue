@@ -1,7 +1,14 @@
 <script lang="ts" setup>
 import { useExtension, useMessages } from '@modernice/vue-i18n-modules'
 import { useI18n } from 'vue-i18n'
+import BazTest from '../components/BazTest.vue'
 import { languages } from '@/config/i18n'
+import { definePageMeta } from '#imports'
+
+definePageMeta({
+  middleware: ['i18n:messages'],
+  messages: ['baz'],
+})
 
 const { loadModule } = useExtension()
 const { setLocaleMessage } = useI18n()
@@ -21,6 +28,7 @@ function reset() {
     <div :style="{ display: 'flex', gap: '0.25rem' }">
       <button @click="loadModule('foo')">Load "foo" messages</button>
       <button @click="loadModule('bar')">Load "bar" messages</button>
+      <button @click="loadModule('baz')">Load "baz" messages</button>
       <button @click="reset">Clear messages</button>
     </div>
 
@@ -59,5 +67,7 @@ function reset() {
         {{ translateBar('bar-d') }}
       </li>
     </ul>
+
+    <BazTest />
   </div>
 </template>

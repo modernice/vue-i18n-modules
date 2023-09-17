@@ -48,22 +48,22 @@
   "license": "MIT",
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.8",
-    "@intlify/core-base": "9.3.0-beta.25",
+    "@intlify/core-base": "9.4.1",
     "@types/node": "^18.17.3",
     "@vue/reactivity": "^3.3.4",
     "@vue/runtime-core": "^3.3.4",
     "@vue/runtime-dom": "^3.3.4",
     "@vue/shared": "^3.3.4",
     "chokidar-cli": "^3.0.0",
-    "eslint-config-prettier": "^8.10.0",
+    "eslint-config-prettier": "^9.0.0",
     "knitwork": "^1.0.0",
     "pkg-types": "^1.0.3",
-    "prettier": "^3.0.1",
+    "prettier": "^3.0.3",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
-    "vite-plugin-dts": "^3.5.1",
+    "vite-plugin-dts": "^3.5.3",
     "vue": "^3.3.4",
-    "vue-i18n": "^9.3.0-beta.25"
+    "vue-i18n": "^9.4.1"
   },
   "peerDependencies": {
     "@vue/reactivity": "^3.3.4",
@@ -71,6 +71,6 @@
     "@vue/runtime-dom": "^3.3.4",
     "@vue/shared": "^3.3.4",
     "vue": "^3.3.4",
-    "vue-i18n": "^9.3.0-beta.25"
+    "vue-i18n": "^9.4.1"
   }
 }

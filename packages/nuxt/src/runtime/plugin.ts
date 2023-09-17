@@ -1,7 +1,7 @@
 import type { ModuleName } from '@modernice/vue-i18n-modules'
 import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
 import type { ModuleOptions } from '../module'
-import { InitialModulesMiddleware, MessagesMiddleware } from './const'
+import { InitialModulesMiddleware, MessagesMiddleware } from '../middleware'
 import { addRouteMiddleware, defineNuxtPlugin, useNuxtApp } from '#app'
 import { loader } from '#build/i18n-modules.loader.mjs'
 import options from '#build/i18n-modules.options.mjs'
@@ -42,7 +42,8 @@ export default defineNuxtPlugin({
         await Promise.all(modules.map((mod) => loadModule(mod)))
       } catch (e) {
         console.error(
-          `[vue-i18n-modules] Failed to load message modules: ${(e as Error).message
+          `[vue-i18n-modules] Failed to load message modules: ${
+            (e as Error).message
           }`,
         )
       }
@@ -61,7 +62,8 @@ export default defineNuxtPlugin({
           await Promise.all(opts.initial.map((mod) => loadModule(mod)))
         } catch (e) {
           console.error(
-            `[nuxt-i18n-modules] Failed to load initial message modules: ${(e as Error).message
+            `[nuxt-i18n-modules] Failed to load initial message modules: ${
+              (e as Error).message
             }`,
           )
         }

@@ -3,7 +3,7 @@ import type {
   ModuleLoaderContext,
   ModuleName,
   ModuleT,
-} from '../types.js'
+} from '../types'
 
 /**
  * Files returned by Vite's `import.meta.glob` with support for dynamic and static imports.
@@ -23,10 +23,10 @@ export function createGlobLoader(
      * If provided, prepends the prefix to the file path when loading a module.
      */
     prefix?: string
-  }
+  },
 ): ModuleLoader {
   return async <Name extends ModuleName, Module = ModuleT<Name>>(
-    ctx: ModuleLoaderContext
+    ctx: ModuleLoaderContext,
   ): Promise<Module> => {
     const prefix = (options?.prefix ?? '').replace(/\/+$/, '')
     const path = prefix ? `${prefix}/${ctx.path.replace(/^\/+/, '')}` : ctx.path
@@ -34,7 +34,7 @@ export function createGlobLoader(
 
     if (!loader) {
       throw new Error(
-        `[vue-i18n-modules] Message module "${ctx.module}" not found at path "${path}".`
+        `[vue-i18n-modules] Message module "${ctx.module}" not found at path "${path}".`,
       )
     }
 

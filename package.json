@@ -3,7 +3,7 @@
   "author": "Saman Hosseini <saman@modernice.ltd>",
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.8",
-    "eslint-config-prettier": "^8.10.0",
+    "eslint-config-prettier": "^9.0.0",
     "typescript": "~5.1.6"
   }
 }

@@ -169,7 +169,7 @@ Then augment the `DefineModules` interface to enable strict typing:
 
 ```ts
 // in a project-wide *.d.ts file
-import { Foobar } from './messages/foo/foobar/index.js'
+import { Foobar } from './messages/foo/foobar/index'
 
 declare module '@modernice/vue-i18n-modules' {
   interface DefineModules {
