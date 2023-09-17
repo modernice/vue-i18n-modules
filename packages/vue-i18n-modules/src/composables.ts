@@ -85,28 +85,30 @@ function _useMessages<Name extends ModuleName>(
       return
     }
 
-    if (!moduleLoaded(module)) {
+    if (moduleLoaded(module)) {
+      debugLog(`[useMessages] "${module}" module already loaded.`)
+      return
+    }
+
+    debugLog(
+      `[useMessages] "${module}" module not loaded yet. Loading messages ...`,
+    )
+
+    try {
+      await loadModule(module)
+      debugLog(`Module "${module}" loaded successfully.`)
+    } catch (e) {
       debugLog(
-        `[useMessages] "${module}" module not loaded yet. Loading messages ...`,
+        `[useMessages] Failed to load "${module}" module: ${
+          (e as Error).message
+        }`,
       )
 
-      try {
-        debugLog(`Loading "${module}" module ...`)
-        await loadModule(module)
-        debugLog(`Module "${module}" loaded successfully.`)
-      } catch (e) {
-        debugLog(
-          `[useMessages] Failed to load "${module}" module: ${
-            (e as Error).message
-          }`,
-        )
-
-        console.warn(
-          `[vue-i18n-modules] Failed to load "${module}" module: ${
-            (e as Error).message
-          }`,
-        )
-      }
+      console.warn(
+        `[vue-i18n-modules] Failed to load "${module}" module: ${
+          (e as Error).message
+        }`,
+      )
     }
   }
 
