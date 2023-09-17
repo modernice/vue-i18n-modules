@@ -35,8 +35,8 @@
   },
   "peerDependencies": {
     "@modernice/vue-i18n-modules": "*",
-    "@nuxtjs/i18n": "8.0.0-rc.2",
-    "vue-i18n": "^9.3.0-beta.25"
+    "@nuxtjs/i18n": "^8.0.0-rc.4",
+    "vue-i18n": "^9.4.1"
   },
   "dependencies": {
     "@nuxt/kit": "^3.7.3",
