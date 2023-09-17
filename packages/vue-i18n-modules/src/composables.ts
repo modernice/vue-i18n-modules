@@ -115,8 +115,8 @@ function _useMessages<Name extends ModuleName>(
   const instance = getCurrentInstance()
   if (instance) {
     instance.appContext.app.runWithContext(() => {
-      onServerPrefetch(init)
-      onBeforeMount(init)
+      onServerPrefetch(init, instance)
+      onBeforeMount(init, instance)
     })
   }
 
