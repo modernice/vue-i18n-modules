@@ -84,7 +84,7 @@ export function createExtension(options: Options) {
    * Loads and registers the messages of a module.
    */
   async function loadModule(
-    module: ModuleName,
+    name: ModuleName,
     opts?: {
       /**
        * If provided, the module is loaded for all given locales.
@@ -97,22 +97,24 @@ export function createExtension(options: Options) {
 
     const locales = opts?.locales || [activeLocale.value]
 
-    debugLog(`Trying to load ${module} module (${locales.join(', ')}) ...`)
+    debugLog(`Trying to load ${name} module (${locales.join(', ')}) ...`)
 
     for (const locale of locales) {
-      const path = `${module}/${locale}.json`
+      const path = `${name}/${locale}.json`
 
       try {
         debugLog(`Trying to load module from "${path}" ...`)
 
         const mod = await options.loader({
           path,
-          module,
+          module: name,
         })
 
-        await mergeMessages(locale, module, mod)
+        debugLog(`Merging "${name}" (${path}) messages ...`)
+
+        await mergeMessages(locale, name, mod)
       } catch (e) {
-        debugLog(`Failed to load "${module}" module: ${(e as Error).message}`)
+        debugLog(`Failed to load "${name}" module: ${(e as Error).message}`)
 
         console.warn(
           `[vue-i18n-modules] Failed to load messages from path "${path}": ${
@@ -125,7 +127,7 @@ export function createExtension(options: Options) {
         loadedModules.value.set(locale, new Set<ModuleName>())
       }
 
-      loadedModules.value.get(locale)?.add(module)
+      loadedModules.value.get(locale)?.add(name)
     }
   }
 

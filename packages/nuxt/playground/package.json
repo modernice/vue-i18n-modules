@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@modernice/nuxt-i18n-modules": "workspace:*",
-    "jiti": "^1.20.0",
-    "nuxt": "^3.7.3"
+    "jiti": "^1.21.0",
+    "nuxt": "^3.8.1"
   }
 }

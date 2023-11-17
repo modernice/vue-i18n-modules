@@ -39,26 +39,26 @@
     "vue-i18n": "^9.4.1"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.7.3",
+    "@nuxt/kit": "^3.8.1",
     "consola": "^3.2.3",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@modernice/vue-i18n-modules": "workspace:*",
-    "@nuxt/devtools": "^0.8.3",
+    "@nuxt/devtools": "^1.0.2",
     "@nuxt/eslint-config": "^0.2.0",
-    "@nuxt/module-builder": "^0.5.1",
-    "@nuxt/schema": "^3.7.3",
-    "@nuxt/test-utils": "^3.7.3",
+    "@nuxt/module-builder": "^0.5.4",
+    "@nuxt/schema": "^3.8.1",
+    "@nuxt/test-utils": "^3.8.1",
     "@nuxtjs/i18n": "^8.0.0-rc.4",
-    "@types/lodash-es": "^4.17.9",
+    "@types/lodash-es": "^4.17.11",
     "@types/node": "^18.17.3",
     "changelogen": "^0.5.5",
-    "eslint": "^8.49.0",
-    "jiti": "^1.20.0",
-    "nuxt": "^3.7.3",
+    "eslint": "^8.53.0",
+    "jiti": "^1.21.0",
+    "nuxt": "^3.8.1",
     "unbuild": "^2.0.0",
-    "vitest": "^0.34.4",
-    "vue-i18n": "^9.4.1"
+    "vitest": "^0.34.6",
+    "vue-i18n": "^9.7.0"
   }
 }
