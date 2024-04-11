@@ -15,11 +15,12 @@ export const ExtensionKey = '@modernice/vue-i18n-modules'
  * type Example = {
  *   foo: { bar: { baz: 'hello' } },
  *   a: { b: { foo: 1, bar: 2 } },
+ *   b: { c: [{ foo: 'hello' }, { bar: 'world'}]}
  * }
  *
  * type Keys = ConcatKeys<Example, '.'>
  *
- * Keys == 'foo' | 'foo.bar' | 'foo.bar.baz' | 'a' | 'a.b' | 'a.b.foo' | 'a.b.bar'
+ * Keys == 'foo' | 'foo.bar' | 'foo.bar.baz' | 'a' | 'a.b' | 'a.b.foo' | 'a.b.bar' | 'b' | 'b.c' | 'b.c.0' | 'b.c.0.foo' | 'b.c.1' | 'b.c.1.bar'
  * ```
  */
 export type ConcatKeys<
@@ -28,13 +29,19 @@ export type ConcatKeys<
   Prefix extends string = '',
 > = keyof DefineModules extends never
   ? string
-  : T extends Dictionary
-  ? {
-      [K in keyof T]:
-        | `${Prefix}${K & string}`
-        | ConcatKeys<T[K], Separator, `${Prefix}${K & string}${Separator}`>
-    }[keyof T]
-  : never
+  : T extends Dictionary[]
+    ? {
+        [E in keyof T]:
+          | `${Prefix}${E & number}`
+          | ConcatKeys<T[E], Separator, `${Prefix}${E & number}${Separator}`>
+      }[number]
+    : T extends Dictionary
+      ? {
+          [K in keyof T]:
+            | `${Prefix}${K & string}`
+            | ConcatKeys<T[K], Separator, `${Prefix}${K & string}${Separator}`>
+        }[keyof T]
+      : never
 
 /**
  * TranslateParams is a type that represents the parameters of a translation

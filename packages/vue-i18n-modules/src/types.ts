@@ -5,7 +5,7 @@ import type { DefineModules } from './augment'
  * in {@link DefineModules}.
  */
 export interface Dictionary
-  extends Record<string, string | string[] | Dictionary> {}
+  extends Record<string, string | string[] | Dictionary | Dictionary[]> {}
 
 /**
  * Message module names. If {@link DefineModules} has defined modules,

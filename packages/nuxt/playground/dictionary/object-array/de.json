@@ -1,0 +1,12 @@
+{
+  "elements": [
+    {
+      "id": "fish",
+      "name": "Fisch"
+    },
+    {
+      "id": "bear",
+      "name": "Bär"
+    }
+  ]
+}

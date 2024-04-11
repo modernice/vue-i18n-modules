@@ -29,6 +29,9 @@ function reset() {
       <button @click="loadModule('foo')">Load "foo" messages</button>
       <button @click="loadModule('bar')">Load "bar" messages</button>
       <button @click="loadModule('baz')">Load "baz" messages</button>
+      <button @click="loadModule('object-array')">
+        Load "object-array" messages
+      </button>
       <button @click="reset">Clear messages</button>
     </div>
 
@@ -69,5 +72,7 @@ function reset() {
     </ul>
 
     <BazTest />
+
+    <ObjectArrayTest />
   </div>
 </template>
