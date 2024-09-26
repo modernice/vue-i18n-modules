@@ -1,5 +1,5 @@
 import { ref } from '@vue/runtime-core'
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 import type { Composer } from 'vue-i18n'
 import type { ConcatKeys, Tail, TranslateParams } from './internal'
 import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types'

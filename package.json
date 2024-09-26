@@ -2,8 +2,8 @@
   "private": true,
   "author": "Saman Hosseini <saman@modernice.ltd>",
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.8",
-    "eslint-config-prettier": "^9.0.0",
-    "typescript": "~5.2.2"
+    "@antfu/eslint-config": "^3.7.2",
+    "eslint-config-prettier": "^9.1.0",
+    "typescript": "~5.6.2"
   }
 }
