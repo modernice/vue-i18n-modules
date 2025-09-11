@@ -1,10 +1,10 @@
 import type { ModuleName } from '@modernice/vue-i18n-modules'
-import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
 import type { ModuleOptions } from '../module'
-import { InitialModulesMiddleware, MessagesMiddleware } from '../middleware'
 import { addRouteMiddleware, defineNuxtPlugin, useNuxtApp } from '#app'
 import { loader } from '#build/i18n-modules.loader.mjs'
 import options from '#build/i18n-modules.options.mjs'
+import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
+import { InitialModulesMiddleware, MessagesMiddleware } from '../middleware'
 
 export default defineNuxtPlugin({
   // Must run after @nuxtjs/i18n!
