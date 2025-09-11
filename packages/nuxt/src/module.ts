@@ -1,5 +1,5 @@
-import { relative } from 'node:path'
 import type { ModuleName, Options } from '@modernice/vue-i18n-modules'
+import { relative } from 'node:path'
 import {
   addImports,
   addPlugin,
@@ -7,9 +7,9 @@ import {
   addTypeTemplate,
   createResolver,
   defineNuxtModule,
-  installModule,
 } from '@nuxt/kit'
 import { omit } from 'lodash-es'
+import { withLeadingSlash } from 'ufo'
 
 /**
  * ModuleOptions is an interface that extends the Options interface from the
@@ -34,6 +34,9 @@ export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: '@modernice/nuxt-i18n-modules',
     configKey: 'i18nModules',
+    compatibility: {
+      nuxt: '^4.0.0',
+    },
   },
 
   defaults: {
@@ -41,32 +44,38 @@ export default defineNuxtModule<ModuleOptions>({
     initial: [],
   },
 
+  moduleDependencies: {
+    '@nuxtjs/i18n': {},
+  },
+
   async setup(options, nuxt) {
-    options.dictionary = options.dictionary.replace(/\/+?$/, '')
+    options.dictionary = options.dictionary.replace(/\/+$/, '')
 
     if (!options.dictionary) {
       throw new Error('[nuxt-i18n-modules] No dictionary path specified.')
     }
 
-    if (!nuxt.options.modules.includes('@nuxtjs/i18n')) {
-      await installModule('@nuxtjs/i18n')
-    }
-
     const resolver = createResolver(import.meta.url)
 
     const root = nuxt.options.rootDir
-    const buildDir = nuxt.options.buildDir
     const absoluteDictionaryDir = createResolver(root).resolve(
       options.dictionary,
     )
-    const dictionaryDir = relative(buildDir, absoluteDictionaryDir)
+
+    // This _should_ be absolute from the root (rootDir) directory
+    // but for some reason it is treated as absolute from the app (srcDir).
+    // This means that the dictionary _has_ to be placed somewhere inside the app (srcDir).
+    // Is this a bug in Nuxt?
+    const absoluteFromApp = withLeadingSlash(
+      relative(root, absoluteDictionaryDir),
+    )
 
     addTemplate({
       getContents:
         () => `import { createGlobLoader } from '@modernice/vue-i18n-modules/vite'
 
-export const loader = createGlobLoader(import.meta.glob('${dictionaryDir}/**/*.json'), {
-  prefix: '${dictionaryDir}/',
+export const loader = createGlobLoader(import.meta.glob('${absoluteFromApp}/**/*.json'), {
+  prefix: '${absoluteFromApp}/',
 })
 `,
       filename: 'i18n-modules.loader.mjs',

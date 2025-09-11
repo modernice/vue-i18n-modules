@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import { definePageMeta } from '#imports'
 import { useExtension, useMessages } from '@modernice/vue-i18n-modules'
 import { useI18n } from 'vue-i18n'
+import { languages } from '../../config/i18n'
 import BazTest from '../components/BazTest.vue'
-import { languages } from '@/config/i18n'
-import { definePageMeta } from '#imports'
 
 definePageMeta({
   middleware: ['i18n:messages'],
