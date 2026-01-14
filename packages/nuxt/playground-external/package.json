@@ -1,5 +1,5 @@
 {
-  "name": "my-module-playground",
+  "name": "my-module-playground-external",
   "type": "module",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
     "generate": "nuxi generate"
   },
   "devDependencies": {
+    "@modernice/external-dictionary": "workspace:*",
     "@modernice/nuxt-i18n-modules": "workspace:*",
     "jiti": "^2.6.1",
     "nuxt": "^4.2.2"

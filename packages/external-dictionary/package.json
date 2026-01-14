@@ -1,0 +1,17 @@
+{
+  "name": "@modernice/external-dictionary",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "import": "./index.ts"
+    },
+    "./dictionary/*": "./dictionary/*"
+  },
+  "files": [
+    "dictionary",
+    "index.ts"
+  ]
+}
