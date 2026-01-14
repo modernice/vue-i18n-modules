@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.2
+
+[compare changes](https://github.com/modernice/vue-i18n-modules/compare/v0.3.1...v0.3.2)
+
+### 🚀 Enhancements
+
+- **nuxt:** Support external dictionaries from packages and relative paths ([b9b9358](https://github.com/modernice/vue-i18n-modules/commit/b9b9358))
+
+### ❤️ Contributors
+
+- Bounoable <bounoable@gmail.com>
+
 ## v0.3.1
 
 [compare changes](https://github.com/modernice/vue-i18n-modules/compare/v0.0.21...v0.3.1)
