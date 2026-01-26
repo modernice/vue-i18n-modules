@@ -7,5 +7,6 @@
     "@eslint/eslintrc": "^3.3.3",
     "eslint-config-prettier": "^10.1.8",
     "typescript": "~5.9.3"
-  }
+  },
+  "version": "0.0.1"
 }
