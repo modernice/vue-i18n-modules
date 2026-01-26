@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "@modernice/vue-i18n-modules": "*",
-    "@nuxtjs/i18n": "^9.0.0",
+    "@nuxtjs/i18n": "^10.0.0",
     "ufo": "^1.6.1",
     "vue-i18n": "^9.4.1"
   },

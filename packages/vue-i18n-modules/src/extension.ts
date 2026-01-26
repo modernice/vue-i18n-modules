@@ -1,8 +1,8 @@
-import { ref } from '@vue/runtime-core'
-import { computed } from 'vue'
 import type { Composer } from 'vue-i18n'
 import type { ConcatKeys, Tail, TranslateParams } from './internal'
 import type { Dictionary, ModuleLoader, ModuleName, ModuleT } from './types'
+import { ref } from '@vue/runtime-core'
+import { computed } from 'vue'
 
 /**
  * A vue-i18n extension that provides namespaced lazy message loading.

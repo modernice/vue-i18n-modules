@@ -7,8 +7,7 @@ import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
 import { InitialModulesMiddleware, MessagesMiddleware } from '../middleware'
 
 export default defineNuxtPlugin({
-  // Must run after @nuxtjs/i18n!
-  enforce: 'post',
+  dependsOn: ['i18n:plugin'],
 
   setup({ vueApp }) {
     const opts = options as ModuleOptions
@@ -26,7 +25,7 @@ export default defineNuxtPlugin({
 
     addRouteMiddleware(MessagesMiddleware, async (to) => {
       const { loadModule } = extension
-      const translateOption = (to.matched[0].meta.messages ?? []) as
+      const translateOption = (to.matched[0]?.meta.messages ?? []) as
         | ModuleName
         | ModuleName[]
 
