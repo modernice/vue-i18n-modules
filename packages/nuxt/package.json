@@ -37,30 +37,30 @@
     "@modernice/vue-i18n-modules": "*",
     "@nuxtjs/i18n": "^10.0.0",
     "ufo": "^1.6.1",
-    "vue-i18n": "^9.4.1"
+    "vue-i18n": "^11.3.2"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.2.2",
+    "@nuxt/kit": "^4.4.2",
     "consola": "^3.4.2",
-    "lodash-es": "^4.17.22"
+    "lodash-es": "^4.18.1"
   },
   "devDependencies": {
     "@modernice/vue-i18n-modules": "workspace:*",
     "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/eslint-config": "^1.15.2",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.2.2",
-    "@nuxt/test-utils": "^3.23.0",
-    "@nuxtjs/i18n": "^10.2.1",
+    "@nuxt/schema": "^4.4.2",
+    "@nuxt/test-utils": "^4.0.2",
+    "@nuxtjs/i18n": "^10.2.4",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.7.2",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.2.1",
     "jiti": "^2.6.1",
-    "nuxt": "^4.2.2",
-    "ufo": "^1.6.2",
+    "nuxt": "^4.4.2",
+    "ufo": "^1.6.3",
     "unbuild": "^3.6.1",
-    "vitest": "^4.0.17",
-    "vue-i18n": "^11.2.8"
+    "vitest": "^4.1.5",
+    "vue-i18n": "^11.3.2"
   }
 }

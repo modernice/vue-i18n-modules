@@ -45,6 +45,15 @@ export interface Options {
    * Enable debugging logs.
    */
   debug?: boolean
+
+  /**
+   * Called after a module's messages have been loaded and merged.
+   */
+  onModuleLoaded?: (context: {
+    locale: string
+    module: ModuleName
+    messages: Dictionary
+  }) => void
 }
 
 /**
@@ -67,17 +76,36 @@ export function createExtension(options: Options) {
    */
   const namespace = computed(() => options.namespace || '__modules')
   const loadedModules = ref(new Map<string, Set<ModuleName>>())
+  const messagesVersion = ref(0)
+
+  function trackMessageUpdates() {
+    return messagesVersion.value
+  }
 
   async function mergeMessages(
     locale: string,
-    module: string,
+    module: ModuleName,
     messages: Dictionary,
   ) {
-    const { mergeLocaleMessage } = options.i18n
+    const { getLocaleMessage, setLocaleMessage } = options.i18n
+    const currentMessages = getLocaleMessage(locale) as Record<string, unknown>
+    const currentModules = currentMessages[namespace.value]
+    const existingModules =
+      typeof currentModules === 'object' &&
+      currentModules !== null &&
+      !Array.isArray(currentModules)
+        ? currentModules
+        : {}
 
-    mergeLocaleMessage(locale, {
-      [namespace.value]: { [module]: messages },
+    setLocaleMessage(locale, {
+      ...currentMessages,
+      [namespace.value]: {
+        ...existingModules,
+        [module]: messages,
+      },
     })
+
+    messagesVersion.value++
   }
 
   /**
@@ -113,6 +141,18 @@ export function createExtension(options: Options) {
         debugLog(`Merging "${name}" (${path}) messages ...`)
 
         await mergeMessages(locale, name, mod)
+
+        if (!loadedModules.value.has(locale)) {
+          loadedModules.value.set(locale, new Set<ModuleName>())
+        }
+
+        loadedModules.value.get(locale)?.add(name)
+
+        options.onModuleLoaded?.({
+          locale,
+          module: name,
+          messages: mod,
+        })
       } catch (e) {
         debugLog(`Failed to load "${name}" module: ${(e as Error).message}`)
 
@@ -122,12 +162,6 @@ export function createExtension(options: Options) {
           }`,
         )
       }
-
-      if (!loadedModules.value.has(locale)) {
-        loadedModules.value.set(locale, new Set<ModuleName>())
-      }
-
-      loadedModules.value.get(locale)?.add(name)
     }
   }
 
@@ -164,6 +198,8 @@ export function createExtension(options: Options) {
   ) => {
     const { t } = options.i18n
     const _key = moduleNamespace(module, key)
+
+    trackMessageUpdates()
 
     let translated = t(_key, ...(args as []))
 

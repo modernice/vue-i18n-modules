@@ -1,5 +1,6 @@
 import type { ModuleName, Options } from '@modernice/vue-i18n-modules'
-import { join, relative } from 'node:path'
+import { existsSync } from 'node:fs'
+import { isAbsolute, join, relative, resolve } from 'node:path'
 import {
   addImports,
   addPlugin,
@@ -7,12 +8,39 @@ import {
   addTypeTemplate,
   createResolver,
   defineNuxtModule,
-  resolvePath,
 } from '@nuxt/kit'
 import { omit } from 'lodash-es'
 import { withLeadingSlash } from 'ufo'
 
 const DICTIONARY_ALIAS = '#i18n-dictionary'
+
+function isInsideDirectory(parent: string, child: string) {
+  const relativePath = relative(parent, child)
+  return (
+    !relativePath ||
+    (!relativePath.startsWith('..') && !isAbsolute(relativePath))
+  )
+}
+
+function resolveDictionaryDirectory(
+  dictionary: string,
+  rootDir: string,
+  srcDir: string,
+) {
+  if (isAbsolute(dictionary)) {
+    return dictionary
+  }
+
+  if (dictionary.startsWith('.')) {
+    const rootDictionary = resolve(rootDir, dictionary)
+
+    return existsSync(rootDictionary)
+      ? rootDictionary
+      : resolve(srcDir, dictionary)
+  }
+
+  return join(rootDir, 'node_modules', dictionary)
+}
 
 /**
  * ModuleOptions is an interface that extends the Options interface from the
@@ -21,7 +49,8 @@ const DICTIONARY_ALIAS = '#i18n-dictionary'
  * the path to the dictionary. The `initial` property is an array of ModuleName
  * representing the modules to load initially for every page.
  */
-export interface ModuleOptions extends Omit<Options, 'i18n' | 'loader'> {
+export interface ModuleOptions
+  extends Omit<Options, 'i18n' | 'loader' | 'onModuleLoaded'> {
   /**
    * Path to the dictionary, which can be:
    * - A relative path (e.g., './dictionary', '../../external-dictionary/dictionary')
@@ -45,7 +74,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
 
   defaults: {
-    dictionary: './dictionary', // relative to the root of the project
+    dictionary: './dictionary',
     initial: [],
   },
 
@@ -62,29 +91,31 @@ export default defineNuxtModule<ModuleOptions>({
 
     const resolver = createResolver(import.meta.url)
     const root = nuxt.options.rootDir
+    const srcDir = nuxt.options.srcDir
+    const buildDir = nuxt.options.buildDir
 
     // Resolve the dictionary path
-    // - Relative paths (starting with . or /) are resolved using Nuxt's resolvePath
+    // - Relative paths prefer rootDir for backwards compatibility, then srcDir
+    // - Absolute paths are used as-is
     // - Package paths (e.g., '@scope/package/path') are resolved from node_modules
-    const isRelativePath =
-      options.dictionary.startsWith('.') || options.dictionary.startsWith('/')
-    const absoluteDictionaryDir = isRelativePath
-      ? await resolvePath(options.dictionary)
-      : join(root, 'node_modules', options.dictionary)
+    const absoluteDictionaryDir = resolveDictionaryDirectory(
+      options.dictionary,
+      root,
+      srcDir,
+    )
 
     const relativePath = relative(root, absoluteDictionaryDir)
+    const relativeFromSrcDir = relative(srcDir, absoluteDictionaryDir)
 
-    // Check if the dictionary is in node_modules or outside the app directory
+    // Check if the dictionary is in node_modules or outside the Vite root.
     // In these cases, we need to use a Vite alias
     const isExternalDictionary =
       relativePath.startsWith('node_modules') ||
-      relativePath.startsWith('..') ||
-      relativePath.startsWith('/') // absolute path outside project
+      !isInsideDirectory(srcDir, absoluteDictionaryDir)
 
-    // Compute the prefix based on the path relative from .nuxt directory
+    // Compute the prefix based on the path relative from Nuxt's buildDir
     // This is what Vite's import.meta.glob will return as keys
-    const nuxtDir = join(root, '.nuxt')
-    const relativeFromNuxt = relative(nuxtDir, absoluteDictionaryDir)
+    const relativeFromNuxt = relative(buildDir, absoluteDictionaryDir)
     const globPrefix = withLeadingSlash(relativeFromNuxt)
 
     if (isExternalDictionary) {
@@ -130,15 +161,15 @@ export default defineNuxtModule<ModuleOptions>({
     // Use alias for external dictionaries, relative path for internal ones
     const globPath = isExternalDictionary
       ? DICTIONARY_ALIAS
-      : withLeadingSlash(relativePath)
+      : withLeadingSlash(relativeFromSrcDir)
 
     addTemplate({
       getContents: () => {
-        // Compute the prefix - for internal dictionaries use the relative path from root,
-        // for external dictionaries use the path relative from .nuxt directory
+        // Compute the prefix - for internal dictionaries use the Vite-rooted
+        // path, for external dictionaries use the path relative from buildDir.
         const prefix = isExternalDictionary
           ? globPrefix
-          : withLeadingSlash(relativePath)
+          : withLeadingSlash(relativeFromSrcDir)
 
         return `import { createGlobLoader } from '@modernice/vue-i18n-modules/vite'
 
@@ -154,7 +185,7 @@ export const loader = createGlobLoader(import.meta.glob('${globPath}/**/*.json')
     addTemplate({
       getContents: () =>
         `export default ${JSON.stringify(
-          omit(options, 'dictionary'),
+          omit(options, ['dictionary', 'onModuleLoaded']),
           null,
           2,
         )}\n`,

@@ -11,6 +11,6 @@
     "@modernice/external-dictionary": "workspace:*",
     "@modernice/nuxt-i18n-modules": "workspace:*",
     "jiti": "^2.6.1",
-    "nuxt": "^4.2.2"
+    "nuxt": "^4.4.2"
   }
 }

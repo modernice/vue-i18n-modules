@@ -1,24 +1,58 @@
 import type { ModuleName } from '@modernice/vue-i18n-modules'
 import type { ModuleOptions } from '../module'
-import { addRouteMiddleware, defineNuxtPlugin, useNuxtApp } from '#app'
+import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
+import { addRouteMiddleware, defineNuxtPlugin, useNuxtApp, useState } from '#app'
 import { loader } from '#build/i18n-modules.loader.mjs'
 import options from '#build/i18n-modules.options.mjs'
-import { createExtension, createPlugin } from '@modernice/vue-i18n-modules'
 import { InitialModulesMiddleware, MessagesMiddleware } from '../middleware'
+
+type LoadedModulesState = Record<string, ModuleName[]>
+
+const LoadedModulesStateKey = 'i18n-modules:loaded'
 
 export default defineNuxtPlugin({
   dependsOn: ['i18n:plugin'],
 
-  setup({ vueApp }) {
+  async setup({ vueApp }) {
     const opts = options as ModuleOptions
 
     const { $i18n } = useNuxtApp()
+    const loadedModules = useState<LoadedModulesState>(
+      LoadedModulesStateKey,
+      () => ({}),
+    )
+
+    function rememberLoadedModule(locale: string, module: ModuleName) {
+      const modules = loadedModules.value[locale] ?? []
+
+      if (modules.includes(module)) {
+        return
+      }
+
+      loadedModules.value = {
+        ...loadedModules.value,
+        [locale]: [...modules, module],
+      }
+    }
 
     const extension = createExtension({
       i18n: $i18n,
       loader,
       ...opts,
+      onModuleLoaded({ locale, module }) {
+        if (import.meta.server) {
+          rememberLoadedModule(locale, module)
+        }
+      },
     })
+
+    if (import.meta.client) {
+      await Promise.all(
+        Object.entries(loadedModules.value).flatMap(([locale, modules]) =>
+          modules.map((mod) => extension.loadModule(mod, { locales: [locale] })),
+        ),
+      )
+    }
 
     const plugin = createPlugin(extension)
     vueApp.use(plugin)

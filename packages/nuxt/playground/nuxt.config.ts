@@ -5,7 +5,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   i18n: {
-    locales: languages.slice(),
+    locales: languages.slice().map((lang) => ({
+      code: lang,
+      language: lang,
+    })),
   },
 
   i18nModules: {

@@ -12,6 +12,26 @@ export type GlobFiles =
   | Record<string, () => Promise<unknown>>
   | Record<string, Record<string, unknown>>
 
+function normalizeGlobPath(path: string) {
+  return path.replace(/\\/g, '/')
+}
+
+function resolveGlobFile(files: GlobFiles, path: string, fallbackPath = path) {
+  const normalizedPath = normalizeGlobPath(path)
+  const exact = files[normalizedPath]
+
+  if (exact) {
+    return exact
+  }
+
+  const suffix = `/${normalizeGlobPath(fallbackPath).replace(/^\/+/, '')}`
+  const matches = Object.entries(files).filter(([key]) =>
+    normalizeGlobPath(key).endsWith(suffix),
+  )
+
+  return matches.length === 1 ? matches[0]![1] : undefined
+}
+
 /**
  * Creates a {@link ModuleLoader} from `import.meta.glob`, as provided by
  * [Vite](https://vitejs.dev).
@@ -30,7 +50,7 @@ export function createGlobLoader(
   ): Promise<Module> => {
     const prefix = (options?.prefix ?? '').replace(/\/+$/, '')
     const path = prefix ? `${prefix}/${ctx.path.replace(/^\/+/, '')}` : ctx.path
-    const loader = files[path]
+    const loader = resolveGlobFile(files, path, ctx.path)
 
     if (!loader) {
       throw new Error(
