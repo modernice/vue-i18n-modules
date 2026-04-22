@@ -7,12 +7,12 @@
   "repository": "modernice/vue-i18n-modules",
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
+      "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     },
     "./middleware": {
-      "types": "./dist/middleware.d.ts",
+      "types": "./dist/middleware.d.mts",
       "import": "./dist/middleware.mjs",
       "require": "./dist/middleware.cjs"
     },
@@ -26,7 +26,7 @@
   },
   "scripts": {
     "build:middleware": "unbuild",
-    "prepack": "nuxt-module-build && pnpm build:middleware",
+    "prepack": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && nuxt-module-build build && pnpm build:middleware",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
