@@ -92,7 +92,6 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
     const root = nuxt.options.rootDir
     const srcDir = nuxt.options.srcDir
-    const buildDir = nuxt.options.buildDir
 
     // Resolve the dictionary path
     // - Relative paths prefer rootDir for backwards compatibility, then srcDir
@@ -112,11 +111,6 @@ export default defineNuxtModule<ModuleOptions>({
     const isExternalDictionary =
       relativePath.startsWith('node_modules') ||
       !isInsideDirectory(srcDir, absoluteDictionaryDir)
-
-    // Compute the prefix based on the path relative from Nuxt's buildDir
-    // This is what Vite's import.meta.glob will return as keys
-    const relativeFromNuxt = relative(buildDir, absoluteDictionaryDir)
-    const globPrefix = withLeadingSlash(relativeFromNuxt)
 
     if (isExternalDictionary) {
       // Add a Vite alias for the dictionary directory
@@ -165,10 +159,11 @@ export default defineNuxtModule<ModuleOptions>({
 
     addTemplate({
       getContents: () => {
-        // Compute the prefix - for internal dictionaries use the Vite-rooted
-        // path, for external dictionaries use the path relative from buildDir.
+        // For external dictionaries, keep the alias as the lookup prefix so the
+        // generated loader can resolve the exact module path without relying on
+        // suffix fallback matching.
         const prefix = isExternalDictionary
-          ? globPrefix
+          ? DICTIONARY_ALIAS
           : withLeadingSlash(relativeFromSrcDir)
 
         return `import { createGlobLoader } from '@modernice/vue-i18n-modules/vite'

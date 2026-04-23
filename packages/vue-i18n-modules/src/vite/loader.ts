@@ -29,7 +29,22 @@ function resolveGlobFile(files: GlobFiles, path: string, fallbackPath = path) {
     normalizeGlobPath(key).endsWith(suffix),
   )
 
-  return matches.length === 1 ? matches[0]![1] : undefined
+  if (matches.length === 1) {
+    return matches[0]![1]
+  }
+
+  if (!matches.length) {
+    return undefined
+  }
+
+  const shortestMatchLength = Math.min(
+    ...matches.map(([key]) => normalizeGlobPath(key).length),
+  )
+  const shortestMatches = matches.filter(
+    ([key]) => normalizeGlobPath(key).length === shortestMatchLength,
+  )
+
+  return shortestMatches.length === 1 ? shortestMatches[0]![1] : undefined
 }
 
 /**
